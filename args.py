@@ -6,10 +6,13 @@ def return_args():
     # Basic
     args.add_argument('--seed', type=int, default=1, help='random seed')
     args.add_argument('--save_path', type=str, default='./', help='save path')
+    args.add_argument('--load', type=bool, default=False, help='load model')
+    args.add_argument('--output_path', type=str, default='./', help='output path')
     
     # Dataset
     args.add_argument('--dataset', type=str, default='cifar10', help='cifar10, cifar100, svhn')
-    args.add_argument('--batch_size', type=int, default=128, help='batch size')
+    args.add_argument('--batch_size', type=int, default=4, help='batch size')
+    args.add_argument('--additional_augment', type=int, help="number of produced images from augmentation", default=2)
     args.add_argument('--epochs', type=int, default=200, help='number of epochs')
     
     # Optimizer
@@ -18,10 +21,11 @@ def return_args():
     args.add_argument('--weight_decay', type=float, default=5e-4, help='weight decay')
     
     # Federated Learning
-    args.add_argument('--num_clients', type=int, default=10, help='number of clients')
+    args.add_argument('--functioin', type=str, default=None, help='train/test/attack/None(=all)')
 
     # Augmentation
-    args.add_argument('--aug', type=str, default="none", help="augmentation type: cutmix, cutout, instahide, original, none")
+    args.add_argument('--aug_type', type=str, default=None, \
+                      help="augmentation type: cutmix, cutout, instahide, original, none(do not apply any augmentation)")
 
     # Augmentation - CutMix
     args.add_argument('--beta', type=float, default=1.0, help='beta for mixup')

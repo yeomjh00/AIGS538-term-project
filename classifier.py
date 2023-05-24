@@ -5,13 +5,12 @@ from torch.nn import functional as F
 import torchvision
 import torchvision.transforms as transforms
 
-import cutmix
-import instahide
+from augmentations import InstaHide, CutMix
 
 # Scratch conv net which will be replaced into other architectures
 class Classifier(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, optimizer, augmentation, criterion, batch_size):
-        super(Classifier, self).__init__()
+        super(ResNet, self).__init__()
         # TODO: change architecture by following attack paper.
         self.conv1 = nn.Conv2d(input_size, hidden_size)
         self.conv2 = nn.Conv2d(hidden_size, output_size)
@@ -22,7 +21,7 @@ class Classifier(nn.Module):
         self.augmentation = augmentation
 
 
-    def forward(self, x):
+    def forward(self, x, y):
         x = self.dropout(F.relu(self.conv1(x)))
         x = self.conv2(x)
         return x
@@ -35,14 +34,90 @@ class Classifier(nn.Module):
         pass
 
     def train(self):
+        loss =None
+        grad = torch.autograd.grad(loss, self.parameters())
+        return param, grad
         pass
 
     def test(self):
         pass
 
-    def save(self):
-        pass
+class ResNet(nn.Module):
+    def __init__(self):
+        super(ResNet, self).__init__()
+        
+        self.in_channels = 64
+        self.conv1 = nn.Sequential(
+            nn.Conv2d(3, self.in_channels, kernel_size=7, stride=2, padding=3, bias=False),
+            nn.BatchNorm2d(64),
+            nn.ReLU(),
+            nn.MaxPool2d(kernel_size=3, stride=2, padding=1)            
+        )
+        self.conv2 = nn.Sequential(
+            ResidualBlock(64, 16, 16),
+            ResidualBlock(16, 16, 16),
+        )
+        self.conv3 = nn.Sequential(
+            ResidualBlock(16, 32, 32),
+            ResidualBlock(32, 32, 32, 2, 1, _downsample=True),
+        )
+        self.conv4 = nn.Sequential(
+            ResidualBlock(32, 64, 64),
+            ResidualBlock(64, 64, 64, 2, 1, _downsample=True),
+        )
+        self.conv5 = nn.Sequential(
+            ResidualBlock(64, 128, 128),
+            ResidualBlock(128, 128, 128, 2, 1, _downsample=True),
+        )
+        self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        self.fc = nn.Linear(128, 10)
+        
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.conv2(x)
+        x = self.conv3(x)
+        x = self.conv4(x)
+        x = self.conv5(x)
+        x = self.avgpool(x)
+        x = torch.flatten(x, 1)
+        x = self.fc(x)
+        return x
 
-    def load(self):
-        pass
+class ResidualBlock(nn.Module):
+    def __init__(self, _in_channels, _hidden_channels, _out_channels, \
+                _stride_1=1, _stride_2=1, \
+                _kernel_size_1=3, _kernel_size_2=3, \
+                _padding_1=1, _padding_2=1, \
+                _downsample=None, _bias=False):
+        super(ResidualBlock, self).__init__()
 
+        skip_stride = 1
+        if _downsample:
+            skip_stride = 2
+
+        self.main_layer = nn.Sequential (
+            nn.Conv2d(in_channels=_in_channels, out_channels=_hidden_channels, \
+                      kernel_size=_kernel_size_1, \
+                      stride=_stride_1, padding=_padding_1, bias=_bias),
+            nn.BatchNorm2d(_hidden_channels),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=_hidden_channels, out_channels=_out_channels, \
+                      kernel_size=_kernel_size_2, \
+                      stride=_stride_2, padding=_padding_2, bias=_bias),
+            nn.BatchNorm2d(_out_channels),
+        )
+
+        self.skip_layers = nn.Sequential(
+            nn.Conv2d(in_channels=_in_channels, out_channels=_out_channels, \
+                      kernel_size=1, stride=skip_stride, \
+                      padding=0, bias=_bias),
+            nn.BatchNorm2d(_out_channels)
+        )
+
+        self.relu = nn.ReLU()
+
+    def forward(self, x):
+        Z = self.main_layer(x)
+        Z += self.skip_layers(x)
+        Z = self.relu(Z)
+        return Z

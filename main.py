@@ -9,6 +9,7 @@ import torchvision.transforms as transforms
 from utils import *
 import pickle
 from augmentations import load_augmentation
+import matplotlib.pyplot as plt
 
 def main(args):
     set_seed(args.seed)
@@ -65,19 +66,82 @@ def main(args):
         # write accuracy
 
     if args.function == "attack" or args.function is None:
-        pass
-        # store trained images
-        # w, grad = victim.leak_info()
         
-        rec_machine = attack.GradientReconstructor(victim)
-        # output, stats = rec_machine.reconstruct(grad, labels, img_shape=(3, 32, 32))
+        # store trained images
+        if not args.load:
+            print("You have to load your trained model first...")
+            return
+        
+        cifar10_mean = [0.4914672374725342, 0.4822617471218109, 0.4467701315879822]
+        cifar10_std = [0.24703224003314972, 0.24348513782024384, 0.26158785820007324]
 
+        dm = torch.as_tensor(cifar10_mean, dtype=torch.float)[:, None, None]
+        ds = torch.as_tensor(cifar10_std, dtype=torch.float)[:, None, None]
+        def plot(tensor):
+            tensor = tensor.clone().detach()
+            tensor.mul_(ds).add_(dm).clamp_(0, 1)
+            if tensor.shape[0] == 1:
+                return plt.imshow(tensor[0].permute(1, 2, 0).cpu())
+            else:
+                fig, axes = plt.subplots(1, tensor.shape[0], figsize=(12, tensor.shape[0]*12))
+                for i, im in enumerate(tensor):
+                    axes[i].imshow(im.permute(1, 2, 0).cpu())
+
+        victim.to("cuda")
+        victim.eval()
+
+        target_id = np.random.randint(len(test_loader.dataset))
+        ground_truth, labels = test_loader.dataset[target_id]
+        ground_truth, labels = (
+            ground_truth.unsqueeze(0).to("cuda"),
+            torch.as_tensor((labels,), device="cuda"),
+        )
+            
+        img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
+
+        plot(ground_truth)
+        print([test_loader.dataset.classes[l] for l in labels])
+
+        victim.zero_grad()
+        target_loss = F.cross_entropy(victim(ground_truth), labels)
+        input_gradient = torch.autograd.grad(target_loss, victim.parameters())
+        input_gradient = [grad.detach() for grad in input_gradient]
+        
+        # have to modify values according to several options(?)
+        config = dict(
+            signed=True,
+            boxed=True,
+            cost_fn='sim',
+            indices='def',
+            weights='equal',
+            lr=0.1,
+            optim='adam',
+            restarts=1,
+            max_iterations=4000,
+            total_variation=1e-6,
+            init='randn',
+            filter='none',
+            lr_decay=True,
+            scoring_choice='loss',
+        )
+
+        rec_machine = attack.GradientReconstructor(victim, (dm, ds), config)
+        output, stats = rec_machine.reconstruct(input_gradient, labels, img_shape=img_shape)
+
+        test_mse = (output.detach() - ground_truth).pow(2).mean()
+        feat_mse = (victim(output.detach())- victim(ground_truth)).pow(2).mean()  
+        # test_psnr = inversefed.metrics.psnr(output, ground_truth, factor=1/ds)
+
+        # visualization tools
+        plot(output)
+        plt.title(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} "
+                # f"| PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
+                f"| FMSE: {feat_mse:2.4e} |")
+        
         # leakage_score = leakage_metric(img, target)
         # accuracy = victim(img_batch)
 
-    # store accuracy, learkage score, image
-
-    # visualization tools
+        # store accuracy, learkage score, image
 
 if __name__ == "__main__":
     args = args.return_args()

@@ -1,5 +1,6 @@
 import classifier
 import args
+import attack
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -68,8 +69,8 @@ def main(args):
         # store trained images
         # w, grad = victim.leak_info()
         
-        # attacker = attacker(w, grad)
-        # img = attacker.gradientinversion()
+        rec_machine = attack.GradientReconstructor(victim)
+        # output, stats = rec_machine.reconstruct(grad, labels, img_shape=(3, 32, 32))
 
         # leakage_score = leakage_metric(img, target)
         # accuracy = victim(img_batch)

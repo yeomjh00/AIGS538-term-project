@@ -8,6 +8,7 @@ def return_args():
     arg_parse.add_argument('--save_path', type=str, default='./', help='save path')
     arg_parse.add_argument('--load', type=bool, default=False, help='load model')
     arg_parse.add_argument('--output_path', type=str, default='./', help='output path')
+    arg_parse.add_argument('--device', type=str, default='cuda', help='cuda/cpu')
     
     # Dataset
     arg_parse.add_argument('--dataset', type=str, default='cifar10', help='cifar10, cifar100, svhn')

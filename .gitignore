@@ -1,2 +1,4 @@
 /data/
 cifar10.ipynb
+/__pycache__/
+/augmentations/__pycache__/

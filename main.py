@@ -33,7 +33,8 @@ def main(args):
     # labels of CIFAR 10
     string_labels = ["airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"]
     labels_dict = {l:idx for idx, l in enumerate(string_labels)}
-    victim = classifier.ResNet().to(device)
+    # victim = classifier.ResNet().to(device)
+    victim = torchvision.models.resnet18(pretrained=True)
 
     # returned data size: x = (batch_size, 3, 32, 32), y : Tensor of long = (batch_size)
     train_set = torchvision.datasets.CIFAR10(root='./data', train=True, download=True,\
@@ -70,38 +71,43 @@ def main(args):
     if args.function == "attack" or args.function is None:
         
         # store trained images
-        if not args.load:
-            print("You have to load your trained model first...")
-            return
+        # if not args.load:
+        #     print("You have to load your trained model first...")
+        #     return
         
         cifar10_mean = [0.4914672374725342, 0.4822617471218109, 0.4467701315879822]
         cifar10_std = [0.24703224003314972, 0.24348513782024384, 0.26158785820007324]
 
         dm = torch.as_tensor(cifar10_mean, dtype=torch.float)[:, None, None]
         ds = torch.as_tensor(cifar10_std, dtype=torch.float)[:, None, None]
-        def plot(tensor):
+        def plot(tensor, isResult):
             tensor = tensor.clone().detach()
             tensor.mul_(ds).add_(dm).clamp_(0, 1)
             if tensor.shape[0] == 1:
-                return plt.imshow(tensor[0].permute(1, 2, 0).cpu())
+                plt.imshow(tensor[0].permute(1, 2, 0).cpu())
+                if isResult:
+                    plt.savefig("rec_result.png")
+                else:
+                    plt.savefig("ground_truth.png")
+
             else:
                 fig, axes = plt.subplots(1, tensor.shape[0], figsize=(12, tensor.shape[0]*12))
                 for i, im in enumerate(tensor):
                     axes[i].imshow(im.permute(1, 2, 0).cpu())
 
-        victim.to("cuda")
+        victim.to(device)
         victim.eval()
 
         target_id = np.random.randint(len(test_loader.dataset))
         ground_truth, labels = test_loader.dataset[target_id]
         ground_truth, labels = (
-            ground_truth.unsqueeze(0).to("cuda"),
-            torch.as_tensor((labels,), device="cuda"),
+            ground_truth.unsqueeze(0).to(device),
+            torch.as_tensor((labels,), device=device),
         )
             
         img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
 
-        plot(ground_truth)
+        plot(ground_truth, False)
         print([test_loader.dataset.classes[l] for l in labels])
 
         victim.zero_grad()
@@ -135,7 +141,7 @@ def main(args):
         # test_psnr = inversefed.metrics.psnr(output, ground_truth, factor=1/ds)
 
         # visualization tools
-        plot(output)
+        plot(output, True)
         plt.title(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} "
                 # f"| PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
                 f"| FMSE: {feat_mse:2.4e} |")

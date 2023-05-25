@@ -46,7 +46,7 @@ def main(args):
     optimizer = torch.optim.Adam(victim.parameters(), lr=args.lr)
 
     if args.load:
-        victim.load_state_dict(f"{args.save_path}/{args.aug_type}.pkl")
+        victim.load_state_dict(torch.load(f"{args.save_path}/{args.aug_type}.pkl"))
         # TODO: if need, add loading epoch, accuracy, etc for continuing training.
 
     if args.function == "train" or args.function is None:

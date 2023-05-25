@@ -5,7 +5,7 @@ def return_args():
     
     # Basic
     arg_parse.add_argument('--seed', type=int, default=42, help='random seed')
-    arg_parse.add_argument('--save_path', type=str, default='./', help='save path')
+    arg_parse.add_argument('--save_path', type=str, default='./models', help='save path')
     arg_parse.add_argument('--load', type=bool, default=False, help='load model')
     arg_parse.add_argument('--output_path', type=str, default='./', help='output path')
     arg_parse.add_argument('--device', type=str, default='cuda', help='cuda/cpu')

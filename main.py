@@ -58,7 +58,7 @@ def main(args):
             if best_loss > train_loss['mean']:
                 best_loss = train_loss['mean']
                 best_state = victim.state_dict()
-            print("time: [%s], loss: %.4f, accuracy: %.4f" % (time_since(start), train_loss, train_acc))
+            print("time: [%s], loss: %.4f, accuracy: %.4f" % (time_since(start), train_loss["mean"], train_acc["mean"]))
         torch.save(best_state, f"{args.save_path}/{args.aug_type}.pkl")
     
     if args.function == "test" or args.function is None:

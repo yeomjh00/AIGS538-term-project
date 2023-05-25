@@ -29,15 +29,11 @@ def train(args, model: torch.nn.Module , train_set, optimizer, augmentation: Cal
     device = "cuda" if cuda else "cpu"
 
     model.train()
-    total_images = 50000
 
     batch = args.additional_augment + args.batch_size if args.aug_type else args.batch_size
-    cur = 0
 
     for index_batch, (image, label) in enumerate(train_set):
-        cur += batch
-        if cur % 10000 == 0:
-            print(f"{cur/50000 * 100}% of single epoch is done")
+
         image, label = image.to(device), label.to(device)
         onehot_label = F.one_hot(label, num_classes=10).float().to(device)
         if augmentation is not None:

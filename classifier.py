@@ -11,20 +11,10 @@ from augmentations import InstaHide, CutMix
 class Classifier(nn.Module):
     def __init__(self, input_size, hidden_size, output_size, optimizer, augmentation, criterion, batch_size):
         super(ResNet, self).__init__()
-        # TODO: change architecture by following attack paper.
-        self.conv1 = nn.Conv2d(input_size, hidden_size)
-        self.conv2 = nn.Conv2d(hidden_size, output_size)
-        self.dropout = nn.Dropout(0.2)
-        self.optimizer = optimizer
-        self.criterion = criterion
-        self.batch_size = batch_size
-        self.augmentation = augmentation
-
+        pass
 
     def forward(self, x, y):
-        x = self.dropout(F.relu(self.conv1(x)))
-        x = self.conv2(x)
-        return x
+        pass
     
     def __str__(self):
         return "single client of federated learning system"
@@ -34,11 +24,8 @@ class Classifier(nn.Module):
         pass
 
     def train(self):
-        loss =None
-        grad = torch.autograd.grad(loss, self.parameters())
-        return param, grad
         pass
-
+    
     def test(self):
         pass
 

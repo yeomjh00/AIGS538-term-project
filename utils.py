@@ -3,6 +3,14 @@ import torch.nn.functional as F
 import torchvision
 import numpy as np
 from typing import Callable
+import time
+import math
+
+def time_since(since):
+    s = time.time() - since
+    m = math.floor(s / 60)
+    s -= m * 60
+    return '%dm %ds' % (m, s)
 
 def set_seed(seed, cuda=True):
     np.random.seed(seed)
@@ -21,10 +29,17 @@ def train(args, model: torch.nn.Module , train_set, optimizer, augmentation: Cal
     device = "cuda" if cuda else "cpu"
 
     model.train()
+    total_images = 50000
+
+    batch = args.additional_augment + args.batch_size if args.aug_type else args.batch_size
+    cur = 0
 
     for index_batch, (image, label) in enumerate(train_set):
+        cur += batch
+        if cur % 10000 == 0:
+            print(f"{cur/50000 * 100}% of single epoch is done")
         image, label = image.to(device), label.to(device)
-        onehot_label = F.one_hot(label, num_classes=10).to(device)
+        onehot_label = F.one_hot(label, num_classes=10).float().to(device)
         if augmentation is not None:
             image, onehot_label = augmentation(args, image, onehot_label)
         
@@ -59,7 +74,7 @@ def test(args, model: torch.nn.Module , test_set, augmentation: Callable, cuda=T
 
         for index_batch, (image, label) in enumerate(test_set):
             image, label = image.to(device), label.to(device)
-            onehot_label = F.one_hot(label, num_classes=10).to(device)
+            onehot_label = F.one_hot(label, num_classes=10).float().to(device)
 
             logits = model(image)
             loss= F.cross_entropy(logits, onehot_label)

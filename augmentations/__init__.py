@@ -1,9 +1,10 @@
-from instahide import InstaHide
-from cutmix import CutMix
-from original import Original
+from .instahide import InstaHide
+from .cutmix import CutMix
+from .original import Original
 from typing import Callable
+
 def load_augmentation(args, aug_type: str) -> Callable:
-    if aug_type == "none":
+    if aug_type is None:
         return None
     elif aug_type == "instahide":
         return InstaHide(args)

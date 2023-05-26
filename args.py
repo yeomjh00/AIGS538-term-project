@@ -31,6 +31,15 @@ def return_args():
     arg_parse.add_argument('--cutmix_prob', type=float, default=0.5, help='cutmix probability')
     arg_parse.add_argument('--mix', type=int, default=2, help='how many images to mix')
 
+    # Attack
+    arg_parse.add_argument('--target_id', type=int, default=None, help='Cifar validation image used for reconstruction.')
+
+    # Results
+    arg_parse.add_argument('--name', default='iv', type=str, help='Name tag for the result table and model.')
+    arg_parse.add_argument('--save_image', action='store_true', help='Save the output to a file.')
+    arg_parse.add_argument('--image_path', default='images/', type=str)
+    arg_parse.add_argument('--table_path', default='tables/', type=str)
+
     args = arg_parse.parse_args()
 
     return args

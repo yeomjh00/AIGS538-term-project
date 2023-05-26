@@ -1,6 +1,7 @@
 import torch
 import time
 from collections import defaultdict
+from metrics import total_variation
 # from .medianfilt import MedianPool2d
 
 DEFAULT_CONFIG = dict(signed=False,
@@ -299,9 +300,3 @@ def reconstruction_costs(gradients, input_gradient, cost_fn='l2', indices='def',
         # Accumulate final costs
         total_costs += costs
     return total_costs / len(gradients)
-
-def total_variation(x):
-    """Anisotropic TV."""
-    dx = torch.mean(torch.abs(x[:, :, :, :-1] - x[:, :, :, 1:]))
-    dy = torch.mean(torch.abs(x[:, :, :-1, :] - x[:, :, 1:, :]))
-    return dx + dy

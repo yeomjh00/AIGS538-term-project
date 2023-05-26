@@ -5,6 +5,8 @@ import numpy as np
 from typing import Callable
 import time
 import math
+import os
+import csv
 
 def time_since(since):
     s = time.time() - since
@@ -89,3 +91,31 @@ def test(args, model: torch.nn.Module , test_set, augmentation: Callable, cuda=T
         accuracy    = {'mean' : accuracy_mean_epoch, 'std' : accuracy_std_epoch}
 
     return (loss, accuracy)  
+
+def save_to_table(out_dir, name, dryrun, **kwargs):
+    """Save keys to .csv files. Function adapted from Micah."""
+    # Check for file
+    if not os.path.isdir(out_dir):
+        os.makedirs(out_dir)
+    fname = os.path.join(out_dir, f'table_{name}.csv')
+    fieldnames = list(kwargs.keys())
+
+    # Read or write header
+    try:
+        with open(fname, 'r') as f:
+            reader = csv.reader(f, delimiter='\t')
+            header = [line for line in reader][0]
+    except Exception as e:
+        print('Creating a new .csv table...')
+        with open(fname, 'w') as f:
+            writer = csv.DictWriter(f, delimiter='\t', fieldnames=fieldnames)
+            writer.writeheader()
+    if not dryrun:
+        # Add row for this experiment
+        with open(fname, 'a') as f:
+            writer = csv.DictWriter(f, delimiter='\t', fieldnames=fieldnames)
+            writer.writerow(kwargs)
+        print('\nResults saved to ' + fname + '.')
+    else:
+        print(f'Would save results to {fname}.')
+        print(f'Would save these keys: {fieldnames}.')

@@ -2,6 +2,7 @@ import classifier
 import time
 import args
 import attack
+import metrics
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -11,6 +12,8 @@ from utils import *
 import pickle
 from augmentations import load_augmentation
 import matplotlib.pyplot as plt
+import os
+import datetime
 
 def main(args):
     set_seed(args.seed)
@@ -74,31 +77,21 @@ def main(args):
         # if not args.load:
         #     print("You have to load your trained model first...")
         #     return
-        
+        start_time = time.time()
+
         cifar10_mean = [0.4914672374725342, 0.4822617471218109, 0.4467701315879822]
         cifar10_std = [0.24703224003314972, 0.24348513782024384, 0.26158785820007324]
 
         dm = torch.as_tensor(cifar10_mean, dtype=torch.float)[:, None, None]
         ds = torch.as_tensor(cifar10_std, dtype=torch.float)[:, None, None]
-        def plot(tensor, isResult):
-            tensor = tensor.clone().detach()
-            tensor.mul_(ds).add_(dm).clamp_(0, 1)
-            if tensor.shape[0] == 1:
-                plt.imshow(tensor[0].permute(1, 2, 0).cpu())
-                if isResult:
-                    plt.savefig("rec_result.png")
-                else:
-                    plt.savefig("ground_truth.png")
-
-            else:
-                fig, axes = plt.subplots(1, tensor.shape[0], figsize=(12, tensor.shape[0]*12))
-                for i, im in enumerate(tensor):
-                    axes[i].imshow(im.permute(1, 2, 0).cpu())
 
         victim.to(device)
         victim.eval()
 
-        target_id = np.random.randint(len(test_loader.dataset))
+        if args.target_id is None:
+            target_id = np.random.randint(len(test_loader.dataset))
+        else:
+            target_id = args.target_id
         ground_truth, labels = test_loader.dataset[target_id]
         ground_truth, labels = (
             ground_truth.unsqueeze(0).to(device),
@@ -107,7 +100,6 @@ def main(args):
             
         img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
 
-        plot(ground_truth, False)
         print([test_loader.dataset.classes[l] for l in labels])
 
         victim.zero_grad()
@@ -138,18 +130,54 @@ def main(args):
 
         test_mse = (output.detach() - ground_truth).pow(2).mean()
         feat_mse = (victim(output.detach())- victim(ground_truth)).pow(2).mean()  
-        # test_psnr = inversefed.metrics.psnr(output, ground_truth, factor=1/ds)
+        test_psnr = metrics.psnr(output, ground_truth, factor=1/ds)
 
         # visualization tools
-        plot(output, True)
-        plt.title(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} "
-                # f"| PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
-                f"| FMSE: {feat_mse:2.4e} |")
         
         # leakage_score = leakage_metric(img, target)
         # accuracy = victim(img_batch)
 
         # store accuracy, learkage score, image
+        # Save the resulting image
+
+        if args.save_image:
+            os.makedirs(args.image_path, exist_ok=True)
+            output_denormalized = torch.clamp(output * ds + dm, 0, 1)
+            rec_filename = (
+                f'{test_loader.dataset.classes[labels][0]}_trained"'
+                f"ResNet_crossEntropy-{args.target_id}.png"
+            )
+            torchvision.utils.save_image(output_denormalized, os.path.join(args.image_path, rec_filename))
+
+            gt_denormalized = torch.clamp(ground_truth * ds + dm, 0, 1)
+            gt_filename = f"{test_loader.dataset.classes[labels][0]}_ground_truth-{args.target_id}.png"
+            torchvision.utils.save_image(gt_denormalized, os.path.join(args.image_path, gt_filename))
+        else:
+            rec_filename = None
+            gt_filename = None
+
+        # Save to a table:
+        print(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} | PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
+
+        save_to_table(
+            args.table_path,
+            name=f"exp_{args.name}",
+            dryrun=False,
+            rec_loss=stats["opt"],
+            psnr=test_psnr,
+            test_mse=test_mse,
+            feat_mse=feat_mse,
+            target_id=target_id,
+            timing_attack=str(datetime.timedelta(seconds=time.time() - start_time)),
+            rec_img=rec_filename,
+            gt_img=gt_filename,
+        )
+
+        # Print final timestamp
+        print(datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p"))
+        print("---------------------------------------------------")
+        print(f"Finished computations with time (only for attack): {str(datetime.timedelta(seconds=time.time() - start_time))}")
+        print("-------------Job finished.-------------------------")
 
 if __name__ == "__main__":
     args = args.return_args()

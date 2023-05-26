@@ -1,16 +1,18 @@
 from .instahide import InstaHide
 from .cutmix import CutMix
 from .original import Original
+from torch.utils.data.dataset import Dataset
 from typing import Callable
-
-def load_augmentation(args, aug_type: str) -> Callable:
+    
+def load_augmentation(dataset, args, edge=False) -> Dataset:
+    aug_type = args.aug_type
     if aug_type is None:
-        return None
+        return dataset
     elif aug_type == "instahide":
-        return InstaHide(args)
+        return InstaHide(dataset, args)
     elif aug_type == "cutmix":
-        return CutMix(args, args.batch_size, args.batch_size + args.additional_augment)
+        return CutMix(dataset, args)
     elif aug_type == "original":
-        return Original(args)
+        return Original(dataset, args)
     else:
         raise ValueError("augmentation type is not supported")

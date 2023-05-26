@@ -38,7 +38,6 @@ class CutMix(Dataset):
             
             tlb2 = torch.zeros(self.num_class)
             tlb2[lb2] = 1
-            print(lamb, img.size())
             bbx1, bby1, bbx2, bby2 = self.__rand_bbox(img.shape, lamb)
             img[:, bbx1:bbx2, bby1:bby2] = img2[:, bbx1:bbx2, bby1:bby2]
             lamb = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (img.size()[-1] * img.size()[-2]))
@@ -49,7 +48,7 @@ class CutMix(Dataset):
     def __len__(self):
         return len(self.dataset)
     
-    def __rand_bbox(size, lam):
+    def __rand_bbox(self, size, lam):
         if len(size) == 4:
             W = size[2]
             H = size[3]
@@ -60,8 +59,8 @@ class CutMix(Dataset):
             raise Exception
 
         cut_rat = np.sqrt(1. - lam)
-        cut_w = np.int(W * cut_rat)
-        cut_h = np.int(H * cut_rat)
+        cut_w = np.int64(W * cut_rat)
+        cut_h = np.int64(H * cut_rat)
 
         # uniform
         cx = np.random.randint(W)

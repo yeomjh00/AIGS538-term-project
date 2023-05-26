@@ -36,7 +36,10 @@ def train(args, model: torch.nn.Module , train_set, optimizer, cuda=True):
 
         logits = model(image)
         loss = F.cross_entropy(logits, label)
-        accuracy = compute_accuracy(logits, label).to("cpu").numpy()
+
+        accuracy = 0
+        if args.aug_type is None:
+            accuracy = compute_accuracy(logits, label).to("cpu").numpy()
 
         optimizer.zero_grad()
         loss.backward()

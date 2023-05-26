@@ -58,7 +58,7 @@ def main(args):
             print("time: [%s], loss: %.4f, accuracy: %.4f" % (time_since(start), train_loss["mean"], train_acc["mean"]))
     
     if args.function == "test" or args.function is None:
-        test_loss, test_acc = test(args, victim, test_loader, optimizer, cuda=cuda)
+        test_loss, test_acc = test(args, victim, test_loader, cuda=cuda)
         torch.save(victim.state_dict(), f"{args.save_path}/{args.aug_type}.pkl")
         # write accuracy
 

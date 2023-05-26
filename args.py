@@ -27,6 +27,7 @@ def return_args():
                       help="augmentation type: cutmix, cutout, instahide, original, none(do not apply any augmentation)")
 
     # Augmentation - CutMix
+    arg_parse.add_argument('--alpha', type=float, default=1.0, help='alpha for mixup')
     arg_parse.add_argument('--beta', type=float, default=1.0, help='beta for mixup')
     arg_parse.add_argument('--cutmix_prob', type=float, default=0.5, help='cutmix probability')
     arg_parse.add_argument('--mix', type=int, default=2, help='how many images to mix')

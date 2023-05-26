@@ -1,20 +1,12 @@
 import torch
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
-from torch.utils.data import Dataset
+from torch.utils.data import DataLoader, Dataset
 import numpy as np
 import torchvision
 import torchvision.transforms as transforms
 from torch.distributions.beta import Beta
 import math
 import random
-import numpy as np
-
-
-
-"""
-https://github.com/ildoonet/cutmix
-"""
 
 class CutMix(Dataset):
     def __init__(self, dataset, args, edge=False): 
@@ -31,9 +23,10 @@ class CutMix(Dataset):
 
     def __getitem__(self, index):
         img, lb = self.dataset[index]
-        onehot = F.one_hot(self.num_class, lb)
+        tlb = torch.zeros(self.num_class)
+        tlb[lb] = 1
 
-        for _ in range(self.num_mix):
+        for _ in range(self.mix_num):
             r = np.random.rand(1)
             if self.beta <= 0 or r > self.prob:
                 continue
@@ -42,14 +35,16 @@ class CutMix(Dataset):
             rand_index = random.choice(range(len(self)))
 
             img2, lb2 = self.dataset[rand_index]
-            lb2_onehot = F.one_hot(self.num_class, lb2)
-
-            bbx1, bby1, bbx2, bby2 = self.__rand_bbox(img.size(), lamb)
+            
+            tlb2 = torch.zeros(self.num_class)
+            tlb2[lb2] = 1
+            print(lamb, img.size())
+            bbx1, bby1, bbx2, bby2 = self.__rand_bbox(img.shape, lamb)
             img[:, bbx1:bbx2, bby1:bby2] = img2[:, bbx1:bbx2, bby1:bby2]
             lamb = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (img.size()[-1] * img.size()[-2]))
-            lb_onehot = lb_onehot * lamb + lb2_onehot * (1. - lamb)
+            tlb = tlb * lamb + tlb2 * (1. - lamb)
 
-        return img, lb_onehot
+        return img, tlb
 
     def __len__(self):
         return len(self.dataset)

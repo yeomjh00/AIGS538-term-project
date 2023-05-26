@@ -40,9 +40,9 @@ def main(args):
     test_set = load_augmentation(test_set, args, edge=False)
     edge_set = load_augmentation(Subset(test_set, range(400)), args, edge=True)
 
-    train_loader = DataLoader(train_set, batch_size=train_batch, shuffle=True, num_workers=3)
-    test_loader = DataLoader(test_set, batch_size=train_batch, shuffle=False, num_workers=3)
-    edge_loader = DataLoader(edge_set, batch_size=edge_batch, shuffle=False, num_workers=3)
+    train_loader = DataLoader(train_set, batch_size=train_batch, shuffle=True, num_workers=1)
+    test_loader = DataLoader(test_set, batch_size=train_batch, shuffle=False, num_workers=1)
+    edge_loader = DataLoader(edge_set, batch_size=edge_batch, shuffle=False, num_workers=1)
     
     
     optimizer = torch.optim.Adam(victim.parameters(), lr=args.lr)

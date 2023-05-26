@@ -8,60 +8,73 @@ import torchvision.transforms as transforms
 from torch.distributions.beta import Beta
 import math
 import random
+import numpy as np
+
 
 
 """
 https://github.com/ildoonet/cutmix
 """
 
-class CutMix:
-    def __init__(self, args, input_batch, auged_batch, w=32, h=32):
-        self.alpha = args.alpha
-        self.beta = args.beta
-        self.mix = args.mix
-        self.device = args.device
-        self.input_batch = input_batch
-        self.auged_batch = auged_batch
-        self.w = w
-        self.h = h
+class CutMix(Dataset):
+    def __init__(self, dataset, args, edge=False): 
+        self.dataset = dataset
+        self.num_class = args.num_class
+        self.mix_num = args.cutmix_mix_num
+        self.beta = args.cutmix_beta
+        self.prob = args.cutmix_prob
+        self.edge = edge
+
+        if self.edge:
+            self.mix_num = 2
+            self.prob = 1.0
+
+    def __getitem__(self, index):
+        img, lb = self.dataset[index]
+        onehot = F.one_hot(self.num_class, lb)
+
+        for _ in range(self.num_mix):
+            r = np.random.rand(1)
+            if self.beta <= 0 or r > self.prob:
+                continue
+
+            lamb = np.random.beta(self.beta, self.beta)
+            rand_index = random.choice(range(len(self)))
+
+            img2, lb2 = self.dataset[rand_index]
+            lb2_onehot = F.one_hot(self.num_class, lb2)
+
+            bbx1, bby1, bbx2, bby2 = self.__rand_bbox(img.size(), lamb)
+            img[:, bbx1:bbx2, bby1:bby2] = img2[:, bbx1:bbx2, bby1:bby2]
+            lamb = 1 - ((bbx2 - bbx1) * (bby2 - bby1) / (img.size()[-1] * img.size()[-2]))
+            lb_onehot = lb_onehot * lamb + lb2_onehot * (1. - lamb)
+
+        return img, lb_onehot
+
+    def __len__(self):
+        return len(self.dataset)
     
-    def __call__(self, x, y, attack=False):
-        assert len(x.size()) == 4, "input tensor must be [Batch] * [channel] * [height] * [width] sized tensor"
-        assert x.size()[0] == self.input_batch, "input tensor must be fixed sized tensor"
-        images = x.chunk(x.size(0), dim=0)
-        labels = y.chunk(y.size(0), dim=0)
-        aug_size = (self.auged_batch - self.input_batch)
-        
-        h_edges = torch.randint(10, self.h, (aug_size,)).to(self.device)
-        w_edges = torch.randint(10, self.w, (aug_size,)).to(self.device)
+    def __rand_bbox(size, lam):
+        if len(size) == 4:
+            W = size[2]
+            H = size[3]
+        elif len(size) == 3:
+            W = size[1]
+            H = size[2]
+        else:
+            raise Exception
 
-        top = torch.randint(0, self.h - 10, (aug_size,)).to(self.device)
-        left = torch.randint(0, self.w - 10, (aug_size,)).to(self.device)
+        cut_rat = np.sqrt(1. - lam)
+        cut_w = np.int(W * cut_rat)
+        cut_h = np.int(H * cut_rat)
 
-        end_h = torch.minimum(top + h_edges, torch.ones_like(top) * self.h)
-        end_w = torch.minimum(left + w_edges, torch.ones_like(left) * self.w)
-        
-        actual_h_edge = end_h - top
-        actual_w_edge = end_w - left
+        # uniform
+        cx = np.random.randint(W)
+        cy = np.random.randint(H)
 
-        lam = (actual_w_edge * actual_h_edge) / (self.w * self.h)
-        
-        assert len(images) == len(labels), "images and labels must have same batch size"
-        perm_length = (aug_size // self.input_batch + 1) * self.input_batch
-        perm = torch.concat([torch.randperm(self.input_batch) for i in range(perm_length)], dim=0)
+        bbx1 = np.clip(cx - cut_w // 2, 0, W)
+        bby1 = np.clip(cy - cut_h // 2, 0, H)
+        bbx2 = np.clip(cx + cut_w // 2, 0, W)
+        bby2 = np.clip(cy + cut_h // 2, 0, H)
 
-        cropped_images = []
-        cropped_labels = []
-        for i in range(aug_size):
-            img = images[perm[i]].squeeze().clone()
-            next_img = images[perm[i+1]].squeeze().clone()
-            crop =  next_img[:, top[i]:end_h[i], left[i]:end_w[i]].clone().detach()
-            img[:, top[i]:end_h[i], left[i]:end_w[i]] = crop[:,:,:]
-            
-            cropped_images.append(img.unsqueeze(0))
-            cropped_labels.append(labels[perm[i]] * lam[i] + labels[perm[i + 1]] * (1 - lam[i]))
-        
-        aug_images = torch.cat(cropped_images, dim=0)
-        aug_labels = torch.cat(cropped_labels, dim=0)
-        
-        return torch.cat((x.clone(), aug_images), dim=0), torch.cat((y.clone(), aug_labels), dim=0)
+        return bbx1, bby1, bbx2, bby2

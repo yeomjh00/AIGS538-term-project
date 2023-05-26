@@ -9,7 +9,7 @@ def load_augmentation(args, aug_type: str) -> Callable:
     elif aug_type == "instahide":
         return InstaHide(args)
     elif aug_type == "cutmix":
-        return CutMix(args)
+        return CutMix(args, args.batch_size, args.batch_size + args.additional_augment)
     elif aug_type == "original":
         return Original(args)
     else:

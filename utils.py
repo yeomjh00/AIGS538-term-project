@@ -37,8 +37,8 @@ def train(args, model: torch.nn.Module , train_set, optimizer, augmentation: Cal
         image, label = image.to(device), label.to(device)
         onehot_label = F.one_hot(label, num_classes=10).float().to(device)
         if augmentation is not None:
-            image, onehot_label = augmentation(args, image, onehot_label)
-        
+            image, onehot_label = augmentation(image, onehot_label)
+        print(image.shape)
         logits = model(image)
         loss = F.cross_entropy(logits, onehot_label)
         accuracy = compute_accuracy(logits, label).to("cpu").numpy()

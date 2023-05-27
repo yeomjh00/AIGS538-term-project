@@ -71,12 +71,14 @@ def test(args, model: torch.nn.Module , test_set, cuda=True):
 
             logits = model(image)
             loss= F.cross_entropy(logits, label)
-            accuracy = compute_accuracy(logits, label).to("cpu").numpy()
+            accurcay = 0 
+            if args.aug_type is None:
+                accuracy = compute_accuracy(logits, label).to("cpu").numpy()
 
             loss_epoch.append(loss.item())
             accuracy_epoch.append(accuracy)
         
-        with open(f"{args.output_path}/{args.aug_type}.txt", "w+") as f:
+        with open(f"{args.output_path}/{str(args.aug_type)}.txt", "w+") as f:
             f.write(f"{batch_idx}th batch: loss/acc: {loss_epoch}/{accuracy_epoch}")
 
         loss_mean_epoch = np.mean(loss_epoch)
@@ -85,7 +87,7 @@ def test(args, model: torch.nn.Module , test_set, cuda=True):
         accuracy_mean_epoch = np.mean(accuracy_epoch)
         accuracy_std_epoch = np.std(accuracy_epoch)
 
-        with open(f"{args.output_path}/{args.aug_type}.txt", "a+") as f:
+        with open(f"{args.output_path}/{str(args.aug_type)}.txt", "a+") as f:
             f.write(f"Total mean/std of loss: {loss_mean_epoch}/{loss_std_epoch}")
             f.write(f"Total mean/std of acc: {accuracy_mean_epoch}/{accuracy_std_epoch}")
 

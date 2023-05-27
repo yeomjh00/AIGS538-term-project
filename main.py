@@ -48,7 +48,7 @@ def main(args):
     optimizer = torch.optim.Adam(victim.parameters(), lr=args.lr)
 
     if args.function == "test":
-        victim.load_state_dict(torch.load(f"{args.save_path}/{args.aug_type}.pkl"))
+        victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}.pkl"))
 
     if args.function == "train" or args.function is None:
         for epoch in range(args.epochs):
@@ -59,7 +59,7 @@ def main(args):
     
     if args.function == "test" or args.function is None:
         test_loss, test_acc = test(args, victim, test_loader, cuda=cuda)
-        torch.save(victim.state_dict(), f"{args.save_path}/{args.aug_type}.pkl")
+        torch.save(victim.state_dict(), f"{args.save_path}/{str(args.aug_type)}.pkl")
         # write accuracy
 
     if args.function == "attack" or args.function is None:

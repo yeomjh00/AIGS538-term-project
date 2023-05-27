@@ -68,7 +68,7 @@ class SaliencyMix(Dataset):
 
         # initialize OpenCV's static fine grained saliency detector and
         # compute the saliency map
-        saliency = cv2.StaticSaliencySpectralResidual_create()
+        saliency = cv2.saliency.StaticSaliencySpectralResidual_create()
         (success, saliencyMap) = saliency.computeSaliency(temp_img)
         saliencyMap = (saliencyMap * 255).astype("uint8")
 

@@ -78,9 +78,9 @@ def test(args, model: torch.nn.Module , test_set, cuda=True):
             loss_epoch.append(loss.item())
             accuracy_epoch.append(accuracy)
         
-        with open(f"{args.output_path}/{str(args.aug_type)}.txt", "a+") as f:
-            f.write(f"{batch_idx}th batch: loss/acc: {loss.item()}/{accuracy}")
-            f.write("\n")
+            with open(f"{args.output_path}/{str(args.aug_type)}.txt", "a+") as f:
+                f.write(f"{batch_idx}th batch: loss/acc: {loss.item()}/{accuracy}")
+                f.write("\n")
 
         loss_mean_epoch = np.mean(loss_epoch)
         loss_std_epoch = np.std(loss_epoch)

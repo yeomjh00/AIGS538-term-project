@@ -7,6 +7,8 @@ from torch.utils.data import DataLoader, Subset
 import torch.nn.functional as F
 import torchvision
 import torchvision.transforms as transforms
+from torch.utils.tensorboard import SummaryWriter
+import os
 from utils import *
 import pickle
 from augmentations import load_augmentation
@@ -14,6 +16,10 @@ from augmentations import load_augmentation
 def main(args):
     set_seed(args.seed)
     torch.autograd.set_detect_anomaly(True)
+    tensorboard_path = f"{args.output_path}/{str(args.aug_type)}"
+    if not os.path.exists(tensorboard_path):
+        os.mkdir(tensorboard_path)
+    writer = SummaryWriter(log_dir=tensorboard_path)
     device = args.device
     cuda = args.device == "cuda"
 
@@ -51,13 +57,27 @@ def main(args):
         victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}.pkl"))
 
     if args.function == "train" or args.function is None:
+        val_loss = float("inf")
         for epoch in range(args.epochs):
             start = time.time()
             print("Start epoch: %d/%d" % (epoch+1, args.epochs))
             train_loss, train_acc, victim = train(args, victim, train_loader, optimizer, cuda=cuda)
             print("time: [%s], loss: %.4f, accuracy: %.4f" % (time_since(start), train_loss["mean"], train_acc["mean"]))
+            writer.add_scalar("train/loss", train_loss["mean"], epoch)
+            writer.add_scalar("train/loss_std", train_loss["std"], epoch)
+
+            if args.function == "test" or args.function is None:
+                test_loss, test_acc = test(args, victim, test_loader, cuda=cuda)
+                if val_loss > test_loss["mean"]:
+                    best_state = victim.state_dict()
+                    val_loss = test_loss["mean"]
+                
+                writer.add_scalar("test/loss", test_loss["mean"], epoch)
+                writer.add_scalar("test/loss_std", test_loss["std"], epoch)
+
+        torch.save(best_state, f"{args.save_path}/{str(args.aug_type)}.pkl")
     
-    if args.function == "test" or args.function is None:
+    if (args.function == "test" or args.function is None) and not args.function == "train":
         test_loss, test_acc = test(args, victim, test_loader, cuda=cuda)
         torch.save(victim.state_dict(), f"{args.save_path}/{str(args.aug_type)}.pkl")
         # write accuracy
@@ -76,6 +96,9 @@ def main(args):
     # store accuracy, learkage score, image
 
     # visualization tools
+
+    writer.close()
+    
 
 if __name__ == "__main__":
     args = args.return_args()

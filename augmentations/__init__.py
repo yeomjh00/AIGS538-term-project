@@ -1,4 +1,5 @@
 from .instahide import InstaHide
+from .saliencymix import SaliencyMix
 from .cutmix import CutMix
 from .original import Original
 from torch.utils.data.dataset import Dataset
@@ -10,6 +11,8 @@ def load_augmentation(dataset, args, edge=False) -> Dataset:
         return dataset
     elif aug_type == "instahide":
         return InstaHide(dataset, args)
+    elif aug_type == "saliencymix":
+        return SaliencyMix(dataset, args)
     elif aug_type == "cutmix":
         return CutMix(dataset, args)
     elif aug_type == "original":

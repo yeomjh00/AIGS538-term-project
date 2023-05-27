@@ -31,6 +31,11 @@ def return_args():
     arg_parse.add_argument('--cutmix_beta', type=float, default=1.0, help='beta for mixup')
     arg_parse.add_argument('--cutmix_prob', type=float, default=0.5, help='cutmix probability')
 
+    # Augmentation - SaliencyMix
+    arg_parse.add_argument('--saliencymix_mix_num', type=int, default=2, help='number of images to mix')
+    arg_parse.add_argument('--saliencymix_beta', type=float, default=1.0, help='beta for mixup')
+    arg_parse.add_argument('--saliencymix_prob', type=float, default=0.5, help='saliencymix probability')
+
     args = arg_parse.parse_args()
 
     return args

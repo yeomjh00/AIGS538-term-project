@@ -7,7 +7,8 @@ def return_args():
     arg_parse.add_argument('--seed', type=int, default=42, help='random seed')
     arg_parse.add_argument('--save_path', type=str, default='./models', help='save path')
     arg_parse.add_argument('--output_path', type=str, default='./outputs', help='output path')
-    arg_parse.add_argument('--device', type=str, default='cuda', help='cuda/cpu')
+    arg_parse.add_argument('--attack_path', type=str, default='./attack', help='path for storing attack/victim images')
+    arg_parse.add_argument('--device', type=str, default='cpu', help='cuda/cpu')
     
     # Dataset
     arg_parse.add_argument('--dataset', type=str, default='cifar10', help='cifar10, cifar100, svhn')
@@ -30,6 +31,18 @@ def return_args():
     arg_parse.add_argument('--cutmix_mix_num', type=int, default=2, help='number of images to mix')
     arg_parse.add_argument('--cutmix_beta', type=float, default=1.0, help='beta for mixup')
     arg_parse.add_argument('--cutmix_prob', type=float, default=0.5, help='cutmix probability')
+
+    # Augmentation - Original
+    arg_parse.add_argument('--original_mix_num', type=int, default=2, help='number of images to mix')
+    arg_parse.add_argument('--original_beta', type=float, default=1.0, help='beta for mixup')
+    arg_parse.add_argument('--original_prob', type=float, default=1.0, help='cutmix probability')
+
+    # target image + random image => augment image
+    # basic ratio => weight for target image / (1 - basic ratio) => weight for random image
+    # saliency raito => additonal ratio for saliency patch.
+    arg_parse.add_argument('--original_saliency_ratio', type=float, default=0.4, help='additional ratio for saliency part')
+    arg_parse.add_argument('--original_basic_mix_ratio', type=float, default=0.7, help='mix ratio for basic mixup')
+    arg_parse.add_argument('--original_noise', type=float, default=0.1, help='noise ratio for random image. If 0, no noise')
 
     args = arg_parse.parse_args()
 

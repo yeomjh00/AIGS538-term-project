@@ -98,3 +98,10 @@ def test(args, model: torch.nn.Module , test_set, cuda=True):
         accuracy = {'mean' : accuracy_mean_epoch, 'std' : accuracy_std_epoch}
 
     return (loss, accuracy)  
+
+def pixel_range(image: torch.Tensor) -> torch.Tensor:
+    """
+    [-1, 1] values to [0, 1] values
+    """
+    img = image.clone()
+    return (img + 1) / 2

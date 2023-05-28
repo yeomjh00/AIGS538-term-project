@@ -48,7 +48,7 @@ def main(args):
     
     train_set = load_augmentation(train_set, args, edge=False)
     test_set = load_augmentation(test_set, args, edge=False)
-    edge_set = load_augmentation(Subset(test_set, range(4)), args, edge=True)
+    edge_set = load_augmentation(Subset(test_set, range(20)), args, edge=True)
 
 
     train_loader = DataLoader(train_set, batch_size=train_batch, shuffle=True, num_workers=1) # , pin_memory=True

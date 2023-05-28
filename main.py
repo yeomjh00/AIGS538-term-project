@@ -111,10 +111,10 @@ def main(args):
         victim.to(device)
         victim.eval()
 
-        for i, (ground_truth, labels) in enumerate(edge_set):
+        for i, (ground_truth, labels) in enumerate(test_set):
             ground_truth, labels = (
                 ground_truth.unsqueeze(0).to(device),
-                torch.as_tensor((labels,), device=device),
+                labels.unsqueeze(0).to(device),
             )
             img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
 

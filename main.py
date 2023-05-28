@@ -1,6 +1,8 @@
 import classifier
 import time
 import args
+import attack.attack as attack
+import attack.metrics as metrics
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Subset
@@ -99,28 +101,120 @@ def main(args):
 
     if args.function == "attack" or args.function is None:
         pass
-        # 1. store trained images
-        # 2. train images
-        
-        # 3. attack
-
-        # 4. store attack result & metric
+        # 0. prerequisites
         if not os.path.exists(args.attack_path):
             os.mkdir(args.attack_path)
         if not os.path.exists(f"{args.attack_path}/{str(args.aug_type)}"):
             os.mkdir(f"{args.attack_path}/{str(args.aug_type)}")
 
-        # 
-        # for i in range(0):
-        #     victim_img = pixel_0_to_255(victim_img)
-        #     attak_result = pixel_0_to_255(attak_result)
-        #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/victim_{args.name}_{i}.png", victim_img)
-        #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/attck_{args.name}_{i}.png", attak_result)
+        cifar10_mean = [0.4914672374725342, 0.4822617471218109, 0.4467701315879822]
+        cifar10_std = [0.24703224003314972, 0.24348513782024384, 0.26158785820007324]
 
-        # 5. visualize by TensorBoard
-    writer.add_image("image/iteration", pixel_0_to_255(img), epoch)
+        dm = torch.as_tensor(cifar10_mean, dtype=torch.float)[:, None, None]
+        ds = torch.as_tensor(cifar10_std, dtype=torch.float)[:, None, None]
+
+        victim.to(device)
+        victim.eval()
+
+        # 1. store trained images
+        # if args.target_id is None:
+        #     # target_id = np.random.randint(len(test_loader.dataset))
+        #     target_id = np.random.randint(len(edge_loader.dataset))
+        #     # edge set에서 데이터 잘 만들어지는지 확인
+        # else:
+        #     target_id = args.target_id
         
-    writer.close()
+
+        for batch_idx, (image, label) in enumerate(edge_set):
+            for i in range(image.shape[0]):
+                ground_truth, labels = image[i], label[i]
+                ground_truth, labels = (
+                    ground_truth.unsqueeze(0).to(device),
+                    torch.as_tensor((labels,), device=device),
+                )
+                img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
+
+                print([test_loader.dataset.classes[l] for l in labels])
+
+                # 2. train images
+                victim.zero_grad()
+                target_loss = F.cross_entropy(victim(ground_truth), labels)
+                input_gradient = torch.autograd.grad(target_loss, victim.parameters())
+                input_gradient = [grad.detach() for grad in input_gradient]
+                
+                # 3. attack
+                # have to modify values according to several options(?)
+                config = dict(
+                    signed=True,
+                    boxed=True,
+                    cost_fn='sim',
+                    indices='def',
+                    weights='equal',
+                    lr=0.1,
+                    optim='adam',
+                    restarts=1,
+                    max_iterations=4000,
+                    total_variation=1e-6,
+                    init='randn',
+                    filter='none',
+                    lr_decay=True,
+                    scoring_choice='loss',
+                )
+
+                rec_machine = attack.GradientReconstructor(victim, (dm, ds), config)
+                output, stats = rec_machine.reconstruct(input_gradient, labels, img_shape=img_shape)
+
+                test_mse = (output.detach() - ground_truth).pow(2).mean()
+                feat_mse = (victim(output.detach())- victim(ground_truth)).pow(2).mean()  
+                test_psnr = metrics.psnr(output, ground_truth, factor=1/ds)
+
+                # visualization tools
+                # plt.title(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} "
+                #         # f"| PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
+                #         f"| FMSE: {feat_mse:2.4e} |")
+
+                # 4. store attack result & metric
+                
+
+
+                # Save the resulting image
+                # 
+                # for i in range(0):
+                #     victim_img = pixel_0_to_255(victim_img)
+                #     attak_result = pixel_0_to_255(attak_result)
+                #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/victim_{args.name}_{i}.png", victim_img)
+                #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/attck_{args.name}_{i}.png", attak_result)
+
+
+                # Save to a table:
+                print(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} | PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
+
+                save_to_table(
+                    args.table_path,
+                    name=f"exp_{args.name}",
+                    dryrun=False,
+                    rec_loss=stats["opt"],
+                    psnr=test_psnr,
+                    test_mse=test_mse,
+                    feat_mse=feat_mse,
+                    target_id=target_id,
+                    timing_attack=str(datetime.timedelta(seconds=time.time() - start_time)),
+                    rec_img=rec_filename,
+                    gt_img=gt_filename,
+                )
+
+                # Print final timestamp
+                print(datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p"))
+                print("---------------------------------------------------")
+                print(f"Finished computations with time (only for attack): {str(datetime.timedelta(seconds=time.time() - start_time))}")
+                print("-------------Job finished.-------------------------")
+
+
+
+                # 5. visualize by TensorBoard
+            writer.add_image("image/iteration", pixel_0_to_255(img), epoch)
+                
+            writer.close()
 
 
 if __name__ == "__main__":

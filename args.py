@@ -45,6 +45,9 @@ def return_args():
     arg_parse.add_argument('--original_basic_mix_ratio', type=float, default=0.7, help='mix ratio for basic mixup')
     arg_parse.add_argument('--original_noise', type=float, default=0.1, help='noise ratio for random image. If 0, no noise')
 
+    # Attack
+    arg_parse.add_argument('--target_id', type=int, default=None, help='Cifar validation image used for reconstruction.')
+    
     args = arg_parse.parse_args()
 
     return args

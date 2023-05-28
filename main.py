@@ -46,27 +46,22 @@ def main(args):
     test_set = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, \
                                             transform=_transform)
     
-    train_set = load_augmentation(train_set, args, edge=True)
-    test_set = load_augmentation(test_set, args, edge=True)
+    train_set = load_augmentation(train_set, args, edge=False)
+    test_set = load_augmentation(test_set, args, edge=False)
     edge_set = load_augmentation(Subset(test_set, range(400)), args, edge=True)
 
-    cur = 0
-    for idx, (img, label) in enumerate(train_set):
-        with open("./data.txt", "w+") as f:
-            f.write(str(img.numpy()))
-        plt.imshow(np.transpose(img.numpy(), (1,2,0)))
-        plt.savefig(f"train_{idx}.png")
-        cur += 1
-        if cur > 3:
-            exit(1)
-            break
 
     train_loader = DataLoader(train_set, batch_size=train_batch, shuffle=True, num_workers=1) # , pin_memory=True
     test_loader = DataLoader(test_set, batch_size=train_batch, shuffle=False, num_workers=1) # , pin_memory=True
     edge_loader = DataLoader(edge_set, batch_size=edge_batch, shuffle=False, num_workers=1) # , pin_memory=True
     
+    optimizer = torch.optim.SGD(victim.parameters(), \
+                                lr=args.lr, \
+                                momentum=args.momentum, \
+                                weight_decay=args.weight_decay, \
+                                nesterov=True)
     
-    optimizer = torch.optim.Adam(victim.parameters(), lr=args.lr)
+    scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=75, gamma=0.1)
 
     if args.function == "test" or args.function == "attack":
         victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}.pkl"))
@@ -91,6 +86,8 @@ def main(args):
                 
                 writer.add_scalar("test/loss", test_loss["mean"], epoch)
                 writer.add_scalar("test/loss_std", test_loss["std"], epoch)
+            
+            scheduler.step()
 
         torch.save(best_state, f"{args.save_path}/{str(args.aug_type)}.pkl")
     
@@ -212,9 +209,9 @@ def main(args):
 
 
                 # 5. visualize by TensorBoard
-            writer.add_image("image/iteration", pixel_0_to_255(img), epoch)
+            # writer.add_image("image/iteration", pixel_0_to_255(img), epoch)
                 
-            writer.close()
+            # writer.close()
 
 
 if __name__ == "__main__":

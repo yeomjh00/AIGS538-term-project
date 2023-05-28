@@ -9,7 +9,7 @@ def return_args():
     arg_parse.add_argument('--output_path', type=str, default='./outputs', help='output path')
     arg_parse.add_argument('--attack_path', type=str, default='./attack', help='path for storing attack/victim images')
     arg_parse.add_argument('--name', type=str, default="", help='name of the experiment')
-    arg_parse.add_argument('--device', type=str, default='cpu', help='cuda/cpu')
+    arg_parse.add_argument('--device', type=str, default='cuda', help='cuda/cpu')
     
     # Dataset
     arg_parse.add_argument('--dataset', type=str, default='cifar10', help='cifar10, cifar100, svhn')
@@ -20,6 +20,8 @@ def return_args():
     
     # Optimizer
     arg_parse.add_argument('--lr', type=float, default=0.1, help='learning rate')
+    arg_parse.add_argument('--momentum', type=float, default=0.9, help='momentum')
+    arg_parse.add_argument('--weight_decay', type=float, default=1e-4, help='weight decay')
     
     # Federated Learning
     arg_parse.add_argument('--function', type=str, default=None, help='train/test/attack/None(=all)')
@@ -32,6 +34,11 @@ def return_args():
     arg_parse.add_argument('--cutmix_mix_num', type=int, default=2, help='number of images to mix')
     arg_parse.add_argument('--cutmix_beta', type=float, default=1.0, help='beta for mixup')
     arg_parse.add_argument('--cutmix_prob', type=float, default=0.5, help='cutmix probability')
+
+    # Augmentation - Saliency
+    arg_parse.add_argument('--saliency_mix_num', type=int, default=2, help='number of images to mix')
+    arg_parse.add_argument('--saliency_beta', type=float, default=1.0, help='beta for mixup')
+    arg_parse.add_argument('--saliency_prob', type=float, default=0.5, help='cutmix probability')
 
     # Augmentation - Original
     arg_parse.add_argument('--original_mix_num', type=int, default=2, help='number of images to mix')

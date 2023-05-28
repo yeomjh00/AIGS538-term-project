@@ -5,7 +5,6 @@ from torch.nn import functional as F
 import torchvision
 import torchvision.transforms as transforms
 
-from augmentations import InstaHide, CutMix
 
 # Scratch conv net which will be replaced into other architectures
 class Classifier(nn.Module):

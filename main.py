@@ -20,7 +20,7 @@ from augmentations import load_augmentation
 def main(args):
     set_seed(args.seed)
     torch.autograd.set_detect_anomaly(True)
-    tensorboard_path = f"{args.output_path}/{str(args.aug_type)}"
+    tensorboard_path = f"{args.output_path}/{str(args.aug_type)}{str(args.name)}"
     if not os.path.exists(tensorboard_path):
         os.mkdir(tensorboard_path)
     writer = SummaryWriter(log_dir=tensorboard_path)
@@ -64,7 +64,7 @@ def main(args):
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=75, gamma=0.1)
 
     if args.function == "test" or args.function == "attack":
-        victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}.pkl"))
+        victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl"))
 
     if args.function == "train" or args.function is None:
         val_loss = float("inf")
@@ -77,7 +77,7 @@ def main(args):
             writer.add_scalar("train/loss_std", train_loss["std"], epoch)
 
             if args.function == "test" or args.function is None:
-                with open(f"{args.output_path}/{str(args.aug_type)}.txt", "a+") as f:
+                with open(f"{args.output_path}/{str(args.aug_type)}{str(args.name)}.txt", "a+") as f:
                     f.write(f"epoch: {epoch+1}/{args.epochs}\n")
                 test_loss, test_acc = test(args, victim, test_loader, cuda=cuda)
                 if val_loss > test_loss["mean"]:
@@ -89,19 +89,19 @@ def main(args):
             
             scheduler.step()
 
-        torch.save(best_state, f"{args.save_path}/{str(args.aug_type)}.pkl")
+        torch.save(best_state, f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl")
     
     if (args.function == "test" or args.function is None) and not args.function == "train":
         test_loss, test_acc = test(args, victim, test_loader, cuda=cuda)
-        torch.save(victim.state_dict(), f"{args.save_path}/{str(args.aug_type)}.pkl")
+        torch.save(victim.state_dict(), f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl")
         # write accuracy
 
     if args.function == "attack" or args.function is None:
         # 1. prerequisites
         if not os.path.exists(args.attack_path):
             os.mkdir(args.attack_path)
-        if not os.path.exists(f"{args.attack_path}/{str(args.aug_type)}"):
-            os.mkdir(f"{args.attack_path}/{str(args.aug_type)}")
+        if not os.path.exists(f"{args.attack_path}/{str(args.aug_type)}{str(args.name)}"):
+            os.mkdir(f"{args.attack_path}/{str(args.aug_type)}{str(args.name)}")
 
         cifar10_mean = [0.4914672374725342, 0.4822617471218109, 0.4467701315879822]
         cifar10_std = [0.24703224003314972, 0.24348513782024384, 0.26158785820007324]

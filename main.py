@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
 import matplotlib.pyplot as plt
 import os
+import cv2
 from utils import *
 import pickle
 from augmentations import load_augmentation
@@ -100,9 +101,25 @@ def main(args):
         pass
         # 1. store trained images
         # 2. train images
+        
         # 3. attack
+
         # 4. store attack result & metric
+        if not os.path.exists(args.attack_path):
+            os.mkdir(args.attack_path)
+        if not os.path.exists(f"{args.attack_path}/{str(args.aug_type)}"):
+            os.mkdir(f"{args.attack_path}/{str(args.aug_type)}")
+
+        # 
+        # for i in range(0):
+        #     victim_img = pixel_0_to_255(victim_img)
+        #     attak_result = pixel_0_to_255(attak_result)
+        #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/victim_{args.name}_{i}.png", victim_img)
+        #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/attck_{args.name}_{i}.png", attak_result)
+
         # 5. visualize by TensorBoard
+    writer.add_image("image/iteration", pixel_0_to_255(img), epoch)
+        
     writer.close()
 
 

@@ -99,9 +99,18 @@ def test(args, model: torch.nn.Module , test_set, cuda=True):
 
     return (loss, accuracy)  
 
-def pixel_range(image: torch.Tensor) -> torch.Tensor:
+def pixel_0_to_1(image: torch.Tensor) -> torch.Tensor:
     """
     [-1, 1] values to [0, 1] values
     """
     img = image.clone()
     return (img + 1) / 2
+
+def pixel_0_to_255(image: torch.Tensor) -> np.ndarray:
+    """
+    [-1, 1]-value tensor to [0, 255]-value tensor
+    """
+    img = image.clone()
+    img = (((img + 1) / 2) * 255).numpy()
+    img = img.astype(np.uint8)
+    return img

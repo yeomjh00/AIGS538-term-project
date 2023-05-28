@@ -62,8 +62,8 @@ def main(args):
     
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=75, gamma=0.1)
 
-    # if args.function == "test" or args.function == "attack":
-    #     victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl"))
+    if args.function == "test" or args.function == "attack":
+        victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl"))
 
     if args.function == "train" or args.function is None:
         val_loss = float("inf")
@@ -96,6 +96,13 @@ def main(args):
         # write accuracy
 
     if args.function == "attack" or args.function is None:
+        test_set = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, \
+                                            transform=_transform)
+
+        test_set = load_augmentation(test_set, args, edge=True)
+
+
+
         # 1. prerequisites
         if not os.path.exists(args.attack_path):
             os.mkdir(args.attack_path)
@@ -105,13 +112,13 @@ def main(args):
         cifar10_mean = [0.4914672374725342, 0.4822617471218109, 0.4467701315879822]
         cifar10_std = [0.24703224003314972, 0.24348513782024384, 0.26158785820007324]
 
-        dm = torch.as_tensor(cifar10_mean, dtype=torch.float)[:, None, None]
-        ds = torch.as_tensor(cifar10_std, dtype=torch.float)[:, None, None]
+        dm = torch.as_tensor(cifar10_mean, dtype=torch.float).to(device)[:, None, None]
+        ds = torch.as_tensor(cifar10_std, dtype=torch.float).to(device)[:, None, None]
 
         victim.to(device)
         victim.eval()
-
         for i, (ground_truth, labels) in enumerate(test_set):
+            if i > 4: break
             ground_truth, labels = (
                 ground_truth.unsqueeze(0).to(device),
                 labels.unsqueeze(0).to(device),
@@ -135,7 +142,7 @@ def main(args):
                 lr=0.1,
                 optim='adam',
                 restarts=1,
-                max_iterations=4000,
+                max_iterations=10000,
                 total_variation=1e-6,
                 init='randn',
                 filter='none',
@@ -200,7 +207,7 @@ def main(args):
             if config["restarts"] == 1:
                 for i in range(len(mid_output)):
                     for j in range(len(mid_output[i])):
-                        writer.add_image("image/iteration", pixel_0_to_255(mid_output[i][j].squeeze(0)), j)
+                        writer.add_image("image/iteration", pixel_0_to_255(mid_output[i][j].squeeze(0).cpu()), j)
 
         writer.close()
 

@@ -64,7 +64,11 @@ def main(args):
     edge_loader = DataLoader(edge_set, batch_size=edge_batch, shuffle=False, num_workers=1) # , pin_memory=True
     
     
-    optimizer = torch.optim.Adam(victim.parameters(), lr=args.lr)
+    optimizer = torch.optim.SGD(victim.parameters(), \
+                                lr=args.lr, \
+                                momentum=args.momentum, \
+                                weight_decay=args.weight_decay
+                                nesterov=True)
 
     if args.function == "test" or args.function == "attack":
         victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}.pkl"))

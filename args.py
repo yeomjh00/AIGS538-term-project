@@ -20,6 +20,8 @@ def return_args():
     
     # Optimizer
     arg_parse.add_argument('--lr', type=float, default=0.1, help='learning rate')
+    arg_parse.add_argument('--momentum', type=float, default=0.9, help='momentum')
+    arg_parse.add_argument('--weight_decay', type=float, default=1e-4, help='weight decay')
     
     # Federated Learning
     arg_parse.add_argument('--function', type=str, default=None, help='train/test/attack/None(=all)')

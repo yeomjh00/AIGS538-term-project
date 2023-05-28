@@ -15,6 +15,7 @@ In fedlearn.yaml file, we export our conda environment. You can create the same 
 options for aug_type = ( default=None, cutmix, saliencymix, original )
 
 * default: no augmentation
+* mixup: [mixup](https://arxiv.org/abs/1710.09412) augmentation.
 * cutmix: [cutmix](https://arxiv.org/abs/1905.04899) augmentation. 
 * saliencymix: [cut mix with saliency map](https://arxiv.org/abs/2006.01791) augmentation
 * original: our suggested augmentation

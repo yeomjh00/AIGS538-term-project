@@ -28,7 +28,12 @@ def return_args():
 
     # Augmentation
     arg_parse.add_argument('--aug_type', type=str, default=None, \
-                      help="augmentation type: cutmix, cutout, instahide, original, none(do not apply any augmentation)")
+                      help="augmentation type: cutmix, cutout, mixup, original, none(do not apply any augmentation)")
+
+    # Augmentation - Mixup
+    arg_parse.add_argument('--mixup_mix_num', type=int, default=2, help='number of images to mix')
+    arg_parse.add_argument('--mixup_beta', type=float, default=1.0, help='beta for mixup') 
+    arg_parse.add_argument('--mixup_prob', type=float, default=0.5, help='mixup probability')
 
     # Augmentation - CutMix
     arg_parse.add_argument('--cutmix_mix_num', type=int, default=2, help='number of images to mix')

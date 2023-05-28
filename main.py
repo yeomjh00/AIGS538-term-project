@@ -101,8 +101,6 @@ def main(args):
 
         test_set = load_augmentation(test_set, args, edge=True)
 
-
-
         # 1. prerequisites
         if not os.path.exists(args.attack_path):
             os.mkdir(args.attack_path)
@@ -119,10 +117,17 @@ def main(args):
         victim.eval()
         for i, (ground_truth, labels) in enumerate(test_set):
             if i > 4: break
-            ground_truth, labels = (
-                ground_truth.unsqueeze(0).to(device),
-                labels.unsqueeze(0).to(device),
-            )
+
+            if args.aug_type is None:
+                ground_truth, labels = (
+                    ground_truth.unsqueeze(0).to(device),
+                    torch.as_tensor((labels,), device=args.device),
+                )
+            else:
+                ground_truth, labels = (
+                    ground_truth.unsqueeze(0).to(device),
+                    labels.unsqueeze(0).to(device),
+                )
             img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
 
             # 2. train images
@@ -142,7 +147,7 @@ def main(args):
                 lr=0.1,
                 optim='adam',
                 restarts=1,
-                max_iterations=10000,
+                max_iterations=1,
                 total_variation=1e-6,
                 init='randn',
                 filter='none',

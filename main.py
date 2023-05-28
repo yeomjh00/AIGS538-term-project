@@ -48,7 +48,7 @@ def main(args):
     
     train_set = load_augmentation(train_set, args, edge=False)
     test_set = load_augmentation(test_set, args, edge=False)
-    edge_set = load_augmentation(Subset(test_set, range(400)), args, edge=True)
+    edge_set = load_augmentation(Subset(test_set, range(4)), args, edge=True)
 
 
     train_loader = DataLoader(train_set, batch_size=train_batch, shuffle=True, num_workers=1) # , pin_memory=True
@@ -97,8 +97,7 @@ def main(args):
         # write accuracy
 
     if args.function == "attack" or args.function is None:
-        pass
-        # 0. prerequisites
+        # 1. prerequisites
         if not os.path.exists(args.attack_path):
             os.mkdir(args.attack_path)
         if not os.path.exists(f"{args.attack_path}/{str(args.aug_type)}"):
@@ -113,25 +112,15 @@ def main(args):
         victim.to(device)
         victim.eval()
 
-        # 1. store trained images
-        # if args.target_id is None:
-        #     # target_id = np.random.randint(len(test_loader.dataset))
-        #     target_id = np.random.randint(len(edge_loader.dataset))
-        #     # edge set에서 데이터 잘 만들어지는지 확인
-        # else:
-        #     target_id = args.target_id
-        
-
-        for batch_idx, (image, label) in enumerate(edge_set):
+        for batch_idx, (image, label) in enumerate(edge_loader):
             for i in range(image.shape[0]):
-                ground_truth, labels = image[i], label[i]
+                ground_truth = image[i]
+                labels = label[i]
                 ground_truth, labels = (
                     ground_truth.unsqueeze(0).to(device),
                     torch.as_tensor((labels,), device=device),
                 )
                 img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
-
-                print([test_loader.dataset.classes[l] for l in labels])
 
                 # 2. train images
                 victim.zero_grad()
@@ -159,59 +148,65 @@ def main(args):
                 )
 
                 rec_machine = attack.GradientReconstructor(victim, (dm, ds), config)
-                output, stats = rec_machine.reconstruct(input_gradient, labels, img_shape=img_shape)
+                output, stats, mid_output = rec_machine.reconstruct(input_gradient, labels, img_shape=img_shape)
 
                 test_mse = (output.detach() - ground_truth).pow(2).mean()
                 feat_mse = (victim(output.detach())- victim(ground_truth)).pow(2).mean()  
                 test_psnr = metrics.psnr(output, ground_truth, factor=1/ds)
 
-                # visualization tools
-                # plt.title(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} "
-                #         # f"| PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
-                #         f"| FMSE: {feat_mse:2.4e} |")
-
                 # 4. store attack result & metric
-                
+                output_denormalized = torch.clamp(output * ds + dm, 0, 1)
+                attck_filename = f"attck_{args.name}_batch{batch_idx}_idx{i}.png"
+                torchvision.utils.save_image(output_denormalized, f"{args.attack_path}/{str(args.aug_type)}/"+attck_filename)
+                gt_denormalized = torch.clamp(ground_truth * ds + dm, 0, 1)
+                victim_filename = f"victim_{args.name}_batch{batch_idx}_idx{i}.png"
+                torchvision.utils.save_image(gt_denormalized, f"{args.attack_path}/{str(args.aug_type)}/"+victim_filename)
 
-
-                # Save the resulting image
-                # 
-                # for i in range(0):
-                #     victim_img = pixel_0_to_255(victim_img)
-                #     attak_result = pixel_0_to_255(attak_result)
-                #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/victim_{args.name}_{i}.png", victim_img)
-                #     cv2.imwrite(f"{args.attack_path}/{str(args.aug_type)}/attck_{args.name}_{i}.png", attak_result)
-
-
-                # Save to a table:
                 print(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} | PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
-
                 save_to_table(
-                    args.table_path,
+                    f"{args.attack_path}/{str(args.aug_type)}/",
                     name=f"exp_{args.name}",
                     dryrun=False,
                     rec_loss=stats["opt"],
                     psnr=test_psnr,
                     test_mse=test_mse,
-                    feat_mse=feat_mse,
-                    target_id=target_id,
-                    timing_attack=str(datetime.timedelta(seconds=time.time() - start_time)),
-                    rec_img=rec_filename,
-                    gt_img=gt_filename,
+                    feat_mse=f"{feat_mse:2.4e}",
+                    batch_index=batch_idx,
+                    attck_img=attck_filename,
+                    victim_img=victim_filename,
                 )
 
-                # Print final timestamp
-                print(datetime.datetime.now().strftime("%A, %d. %B %Y %I:%M%p"))
-                print("---------------------------------------------------")
-                print(f"Finished computations with time (only for attack): {str(datetime.timedelta(seconds=time.time() - start_time))}")
-                print("-------------Job finished.-------------------------")
+                data = metrics.activation_errors(victim, output, ground_truth)
 
+                fig, axes = plt.subplots(2, 3, sharey=False, figsize=(14,8))
+                axes[0, 0].semilogy(list(data['se'].values())[:-3])
+                axes[0, 0].set_title('SE')
+                axes[0, 1].semilogy(list(data['mse'].values())[:-3])
+                axes[0, 1].set_title('MSE')
+                axes[0, 2].plot(list(data['sim'].values())[:-3])
+                axes[0, 2].set_title('Similarity')
 
+                convs = [val for key, val in data['mse'].items() if 'conv' in key]
+                axes[1, 0].semilogy(convs)
+                axes[1, 0].set_title('MSE - conv layers')
+                convs = [val for key, val in data['mse'].items() if 'conv1' in key]
+                axes[1, 1].semilogy(convs)
+                convs = [val for key, val in data['mse'].items() if 'conv2' in key]
+                axes[1, 1].semilogy(convs)
+                axes[1, 1].set_title('MSE - conv1 vs conv2 layers')
+                bns = [val for key, val in data['mse'].items() if 'bn' in key]
+                axes[1, 2].plot(bns)
+                axes[1, 2].set_title('MSE - bn layers')
+                fig.suptitle('Error between layers')
+                plt.savefig(f"{args.attack_path}/{str(args.aug_type)}/metrics_batch{batch_idx}_idx{i}.png")
 
                 # 5. visualize by TensorBoard
-            # writer.add_image("image/iteration", pixel_0_to_255(img), epoch)
-                
-            # writer.close()
+                if config["restarts"] == 1:
+                    for i in range(len(mid_output)):
+                        for j in range(len(mid_output[i])):
+                            writer.add_image("image/iteration", pixel_0_to_255(mid_output[i][j].squeeze(0)), j)
+ 
+        writer.close()
 
 
 if __name__ == "__main__":

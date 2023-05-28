@@ -55,6 +55,7 @@ class GradientReconstructor():
 
         stats = defaultdict(list)
         x = self._init_images(img_shape)
+        mid_x = []
         scores = torch.zeros(self.config['restarts'])
 
         if labels is None:
@@ -78,10 +79,11 @@ class GradientReconstructor():
 
         try:
             for trial in range(self.config['restarts']):
-                x_trial, labels = self._run_trial(x[trial], input_data, labels, dryrun=dryrun)
+                x_trial, labels, mid_x_trial = self._run_trial(x[trial], input_data, labels, dryrun=dryrun)
                 # Finalize
                 scores[trial] = self._score_trial(x_trial, input_data, labels)
                 x[trial] = x_trial
+                mid_x.append(mid_x_trial)
                 if tol is not None and scores[trial] <= tol:
                     break
                 if dryrun:
@@ -102,7 +104,7 @@ class GradientReconstructor():
             x_optimal = x[optimal_index]
 
         print(f'Total time: {time.time()-start_time}.')
-        return x_optimal.detach(), stats
+        return x_optimal.detach(), stats, mid_x
 
     def _init_images(self, img_shape):
         if self.config['init'] == 'randn':
@@ -146,7 +148,7 @@ class GradientReconstructor():
 
                                                                          max_iterations // 1.142], gamma=0.1)   # 3/8 5/8 7/8
         try:
-            imme_x_trial = []
+            mid_x_trial = []
             for iteration in range(max_iterations):
                 closure = self._gradient_closure(optimizer, x_trial, input_data, labels)
                 rec_loss = optimizer.step(closure)
@@ -168,13 +170,13 @@ class GradientReconstructor():
                         #     x_trial.data = MedianPool2d(kernel_size=3, stride=1, padding=1, same=False)(x_trial)
                         else:
                             raise ValueError()
-                imme_x_trial.append(x_tri)
+                mid_x_trial.append(x_trial.detach())
                 if dryrun:
                     break
         except KeyboardInterrupt:
             print(f'Recovery interrupted manually in iteration {iteration}!')
             pass
-        return x_trial.detach(), labels
+        return x_trial.detach(), labels, mid_x_trial
 
     def _gradient_closure(self, optimizer, x_trial, input_gradient, label):
 

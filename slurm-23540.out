@@ -1,0 +1,5 @@
+  File "main.py", line 21
+    tensorboard_path = f"{args.output_path}/{str(args.aug_type)}{str(args.name)}"
+srun: error: n8: task 0: Exited with exit code 1
+                                                                                ^
+SyntaxError: invalid syntax

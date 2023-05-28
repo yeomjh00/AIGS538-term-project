@@ -1,0 +1,804 @@
+Files already downloaded and verified
+Files already downloaded and verified
+Start epoch: 1/200
+Files already downloaded and verified
+Files already downloaded and verified
+Start epoch: 1/200
+TRAIN: time: [0m 12s], loss: 1.5717, accuracy: 42.2478
+TRAIN: time: [0m 13s], loss: 1.5684, accuracy: 42.3589
+Start epoch: 2/200
+Start epoch: 2/200
+TRAIN: time: [0m 12s], loss: 1.2499, accuracy: 54.7934
+TRAIN: time: [0m 12s], loss: 1.2386, accuracy: 55.3872
+Start epoch: 3/200
+Start epoch: 3/200
+TRAIN: time: [0m 12s], loss: 1.0763, accuracy: 61.7975
+TRAIN: time: [0m 12s], loss: 1.0635, accuracy: 62.1911
+Start epoch: 4/200
+Start epoch: 4/200
+TRAIN: time: [0m 12s], loss: 0.9572, accuracy: 66.0798
+TRAIN: time: [0m 13s], loss: 0.9474, accuracy: 66.4758
+Start epoch: 5/200
+Start epoch: 5/200
+TRAIN: time: [0m 12s], loss: 0.8652, accuracy: 69.6220
+TRAIN: time: [0m 13s], loss: 0.8618, accuracy: 69.6224
+Start epoch: 6/200
+Start epoch: 6/200
+TRAIN: time: [0m 12s], loss: 0.8012, accuracy: 71.9721
+TRAIN: time: [0m 12s], loss: 0.7979, accuracy: 71.7859
+Start epoch: 7/200
+Start epoch: 7/200
+TRAIN: time: [0m 13s], loss: 0.7424, accuracy: 74.0018
+TRAIN: time: [0m 12s], loss: 0.7438, accuracy: 74.0769
+Start epoch: 8/200
+Start epoch: 8/200
+TRAIN: time: [0m 12s], loss: 0.7005, accuracy: 75.6534
+TRAIN: time: [0m 12s], loss: 0.6952, accuracy: 75.7553
+Start epoch: 9/200
+Start epoch: 9/200
+TRAIN: time: [0m 12s], loss: 0.6594, accuracy: 76.8558
+TRAIN: time: [0m 13s], loss: 0.6596, accuracy: 76.9090
+Start epoch: 10/200
+Start epoch: 10/200
+TRAIN: time: [0m 12s], loss: 0.6243, accuracy: 78.0503
+TRAIN: time: [0m 12s], loss: 0.6196, accuracy: 78.3512
+Start epoch: 11/200
+Start epoch: 11/200
+TRAIN: time: [0m 12s], loss: 0.5872, accuracy: 79.4881
+TRAIN: time: [0m 12s], loss: 0.5875, accuracy: 79.6144
+Start epoch: 12/200
+Start epoch: 12/200
+TRAIN: time: [0m 12s], loss: 0.5658, accuracy: 80.0627
+Start epoch: 13/200
+TRAIN: time: [0m 12s], loss: 0.5608, accuracy: 80.3928
+Start epoch: 13/200
+TRAIN: time: [0m 12s], loss: 0.5328, accuracy: 81.1849
+Start epoch: 14/200
+TRAIN: time: [0m 13s], loss: 0.5323, accuracy: 81.3411
+Start epoch: 14/200
+TRAIN: time: [0m 12s], loss: 0.5086, accuracy: 82.1160
+Start epoch: 15/200
+TRAIN: time: [0m 12s], loss: 0.5117, accuracy: 82.0984
+Start epoch: 15/200
+TRAIN: time: [0m 13s], loss: 0.4896, accuracy: 83.0459
+TRAIN: time: [0m 12s], loss: 0.4889, accuracy: 82.8285
+Start epoch: 16/200
+Start epoch: 16/200
+TRAIN: time: [0m 12s], loss: 0.4637, accuracy: 83.7392
+Start epoch: 17/200
+TRAIN: time: [0m 14s], loss: 0.4653, accuracy: 83.6821
+Start epoch: 17/200
+TRAIN: time: [0m 13s], loss: 0.4449, accuracy: 84.4118
+Start epoch: 18/200
+TRAIN: time: [0m 12s], loss: 0.4522, accuracy: 84.1660
+Start epoch: 18/200
+TRAIN: time: [0m 12s], loss: 0.4258, accuracy: 84.9405
+Start epoch: 19/200
+TRAIN: time: [0m 12s], loss: 0.4263, accuracy: 85.0392
+Start epoch: 19/200
+TRAIN: time: [0m 12s], loss: 0.4142, accuracy: 85.4468
+Start epoch: 20/200
+TRAIN: time: [0m 12s], loss: 0.4194, accuracy: 85.2713
+Start epoch: 20/200
+TRAIN: time: [0m 12s], loss: 0.3941, accuracy: 86.1941
+Start epoch: 21/200
+TRAIN: time: [0m 12s], loss: 0.4002, accuracy: 85.8308
+Start epoch: 21/200
+TRAIN: time: [0m 12s], loss: 0.3785, accuracy: 86.8570
+TRAIN: time: [0m 12s], loss: 0.3887, accuracy: 86.3679
+Start epoch: 22/200
+Start epoch: 22/200
+TRAIN: time: [0m 12s], loss: 0.3666, accuracy: 87.2538
+TRAIN: time: [0m 12s], loss: 0.3734, accuracy: 86.9126
+Start epoch: 23/200
+Start epoch: 23/200
+TRAIN: time: [0m 12s], loss: 0.3508, accuracy: 87.6750
+TRAIN: time: [0m 12s], loss: 0.3609, accuracy: 87.1831
+Start epoch: 24/200
+Start epoch: 24/200
+TRAIN: time: [0m 13s], loss: 0.3464, accuracy: 87.7434
+TRAIN: time: [0m 12s], loss: 0.3464, accuracy: 87.9168
+Start epoch: 25/200
+Start epoch: 25/200
+TRAIN: time: [0m 11s], loss: 0.3285, accuracy: 88.3967
+TRAIN: time: [0m 13s], loss: 0.3321, accuracy: 88.4303
+Start epoch: 26/200
+Start epoch: 26/200
+TRAIN: time: [0m 12s], loss: 0.3171, accuracy: 88.8943
+Start epoch: 27/200
+TRAIN: time: [0m 12s], loss: 0.3250, accuracy: 88.4891
+Start epoch: 27/200
+TRAIN: time: [0m 12s], loss: 0.3122, accuracy: 89.0401
+Start epoch: 28/200
+TRAIN: time: [0m 12s], loss: 0.3190, accuracy: 88.7180
+Start epoch: 28/200
+TRAIN: time: [0m 12s], loss: 0.2990, accuracy: 89.3778
+Start epoch: 29/200
+TRAIN: time: [0m 12s], loss: 0.3068, accuracy: 89.1073
+Start epoch: 29/200
+TRAIN: time: [0m 12s], loss: 0.2953, accuracy: 89.6435
+Start epoch: 30/200
+TRAIN: time: [0m 12s], loss: 0.3019, accuracy: 89.3622
+Start epoch: 30/200
+TRAIN: time: [0m 12s], loss: 0.2885, accuracy: 89.7662
+Start epoch: 31/200
+TRAIN: time: [0m 12s], loss: 0.2935, accuracy: 89.6403
+Start epoch: 31/200
+TRAIN: time: [0m 12s], loss: 0.2823, accuracy: 90.0040
+Start epoch: 32/200
+TRAIN: time: [0m 13s], loss: 0.2850, accuracy: 89.9964
+Start epoch: 32/200
+TRAIN: time: [0m 12s], loss: 0.2772, accuracy: 90.2881
+Start epoch: 33/200
+TRAIN: time: [0m 12s], loss: 0.2809, accuracy: 90.2598
+Start epoch: 33/200
+TRAIN: time: [0m 12s], loss: 0.2681, accuracy: 90.5259
+Start epoch: 34/200
+TRAIN: time: [0m 13s], loss: 0.2732, accuracy: 90.3892
+Start epoch: 34/200
+TRAIN: time: [0m 12s], loss: 0.2682, accuracy: 90.5263
+Start epoch: 35/200
+TRAIN: time: [0m 12s], loss: 0.2639, accuracy: 90.7421
+Start epoch: 35/200
+TRAIN: time: [0m 12s], loss: 0.2484, accuracy: 91.1297
+Start epoch: 36/200
+TRAIN: time: [0m 12s], loss: 0.2647, accuracy: 90.6514
+Start epoch: 36/200
+TRAIN: time: [0m 12s], loss: 0.2488, accuracy: 91.1449
+Start epoch: 37/200
+TRAIN: time: [0m 12s], loss: 0.2566, accuracy: 90.9603
+Start epoch: 37/200
+TRAIN: time: [0m 13s], loss: 0.2530, accuracy: 90.9767
+Start epoch: 38/200
+TRAIN: time: [0m 13s], loss: 0.2579, accuracy: 90.8380
+Start epoch: 38/200
+TRAIN: time: [0m 13s], loss: 0.2458, accuracy: 91.4071
+Start epoch: 39/200
+TRAIN: time: [0m 13s], loss: 0.2514, accuracy: 91.1601
+Start epoch: 39/200
+TRAIN: time: [0m 12s], loss: 0.2347, accuracy: 91.6656
+Start epoch: 40/200
+TRAIN: time: [0m 12s], loss: 0.2453, accuracy: 91.3899
+Start epoch: 40/200
+TRAIN: time: [0m 12s], loss: 0.2349, accuracy: 91.6664
+Start epoch: 41/200
+TRAIN: time: [0m 12s], loss: 0.2391, accuracy: 91.5293
+Start epoch: 41/200
+TRAIN: time: [0m 12s], loss: 0.2332, accuracy: 91.8798
+Start epoch: 42/200
+TRAIN: time: [0m 13s], loss: 0.2417, accuracy: 91.4007
+Start epoch: 42/200
+TRAIN: time: [0m 12s], loss: 0.2283, accuracy: 91.9949
+Start epoch: 43/200
+TRAIN: time: [0m 12s], loss: 0.2257, accuracy: 92.0584
+Start epoch: 43/200
+TRAIN: time: [0m 12s], loss: 0.2273, accuracy: 91.9218
+Start epoch: 44/200
+TRAIN: time: [0m 12s], loss: 0.2263, accuracy: 91.9581
+Start epoch: 44/200
+TRAIN: time: [0m 12s], loss: 0.2249, accuracy: 92.0620
+Start epoch: 45/200
+TRAIN: time: [0m 13s], loss: 0.2280, accuracy: 91.9589
+Start epoch: 45/200
+TRAIN: time: [0m 12s], loss: 0.2202, accuracy: 92.2490
+Start epoch: 46/200
+TRAIN: time: [0m 13s], loss: 0.2313, accuracy: 91.8938
+Start epoch: 46/200
+TRAIN: time: [0m 13s], loss: 0.2227, accuracy: 92.2071
+Start epoch: 47/200
+TRAIN: time: [0m 15s], loss: 0.2227, accuracy: 92.1787
+Start epoch: 47/200
+TRAIN: time: [0m 12s], loss: 0.2127, accuracy: 92.3773
+Start epoch: 48/200
+TRAIN: time: [0m 13s], loss: 0.2228, accuracy: 91.9685
+Start epoch: 48/200
+TRAIN: time: [0m 12s], loss: 0.2149, accuracy: 92.3889
+Start epoch: 49/200
+TRAIN: time: [0m 12s], loss: 0.2173, accuracy: 92.4620
+TRAIN: time: [0m 12s], loss: 0.2109, accuracy: 92.5823
+Start epoch: 49/200
+Start epoch: 50/200
+TRAIN: time: [0m 12s], loss: 0.2182, accuracy: 92.4073
+TRAIN: time: [0m 12s], loss: 0.2051, accuracy: 92.6834
+Start epoch: 50/200
+Start epoch: 51/200
+TRAIN: time: [0m 12s], loss: 0.2107, accuracy: 92.7106
+TRAIN: time: [0m 12s], loss: 0.2037, accuracy: 92.7805
+Start epoch: 51/200
+Start epoch: 52/200
+TRAIN: time: [0m 12s], loss: 0.2123, accuracy: 92.4792
+TRAIN: time: [0m 12s], loss: 0.2031, accuracy: 92.8912
+Start epoch: 52/200
+Start epoch: 53/200
+TRAIN: time: [0m 13s], loss: 0.2108, accuracy: 92.6371
+TRAIN: time: [0m 13s], loss: 0.2041, accuracy: 92.8545
+Start epoch: 53/200
+Start epoch: 54/200
+TRAIN: time: [0m 12s], loss: 0.2103, accuracy: 92.6259
+TRAIN: time: [0m 12s], loss: 0.2066, accuracy: 92.8469
+Start epoch: 54/200
+Start epoch: 55/200
+TRAIN: time: [0m 13s], loss: 0.2093, accuracy: 92.6163
+TRAIN: time: [0m 13s], loss: 0.2039, accuracy: 92.7685
+Start epoch: 55/200
+Start epoch: 56/200
+TRAIN: time: [0m 13s], loss: 0.2043, accuracy: 92.8337
+TRAIN: time: [0m 12s], loss: 0.1976, accuracy: 93.0687
+Start epoch: 56/200
+Start epoch: 57/200
+TRAIN: time: [0m 12s], loss: 0.2039, accuracy: 92.8636
+TRAIN: time: [0m 12s], loss: 0.2025, accuracy: 92.9036
+Start epoch: 57/200
+Start epoch: 58/200
+TRAIN: time: [0m 12s], loss: 0.2026, accuracy: 92.8752
+TRAIN: time: [0m 13s], loss: 0.1957, accuracy: 93.0275
+Start epoch: 58/200
+Start epoch: 59/200
+TRAIN: time: [0m 13s], loss: 0.1995, accuracy: 92.9136
+TRAIN: time: [0m 12s], loss: 0.2001, accuracy: 93.1122
+Start epoch: 59/200
+Start epoch: 60/200
+TRAIN: time: [0m 13s], loss: 0.1988, accuracy: 93.0798
+TRAIN: time: [0m 13s], loss: 0.1914, accuracy: 93.2177
+Start epoch: 60/200
+Start epoch: 61/200
+TRAIN: time: [0m 12s], loss: 0.1971, accuracy: 93.0862
+TRAIN: time: [0m 13s], loss: 0.1936, accuracy: 93.1410
+Start epoch: 62/200
+Start epoch: 61/200
+TRAIN: time: [0m 12s], loss: 0.1939, accuracy: 93.1989
+TRAIN: time: [0m 12s], loss: 0.2013, accuracy: 92.9576
+Start epoch: 63/200
+Start epoch: 62/200
+TRAIN: time: [0m 12s], loss: 0.1975, accuracy: 93.0387
+TRAIN: time: [0m 12s], loss: 0.2017, accuracy: 92.8872
+Start epoch: 64/200
+Start epoch: 63/200
+TRAIN: time: [0m 12s], loss: 0.1973, accuracy: 93.0667
+TRAIN: time: [0m 12s], loss: 0.1987, accuracy: 93.0439
+Start epoch: 65/200
+Start epoch: 64/200
+TRAIN: time: [0m 12s], loss: 0.1974, accuracy: 93.0411
+TRAIN: time: [0m 12s], loss: 0.1990, accuracy: 93.0667
+Start epoch: 66/200
+Start epoch: 65/200
+TRAIN: time: [0m 12s], loss: 0.1925, accuracy: 93.2545
+TRAIN: time: [0m 12s], loss: 0.1970, accuracy: 93.0966
+Start epoch: 67/200
+Start epoch: 66/200
+TRAIN: time: [0m 12s], loss: 0.1907, accuracy: 93.3851
+TRAIN: time: [0m 12s], loss: 0.1896, accuracy: 93.3740
+Start epoch: 68/200
+Start epoch: 67/200
+TRAIN: time: [0m 11s], loss: 0.1945, accuracy: 93.2980
+TRAIN: time: [0m 12s], loss: 0.1931, accuracy: 93.1138
+Start epoch: 69/200
+Start epoch: 68/200
+TRAIN: time: [0m 13s], loss: 0.1927, accuracy: 93.2057
+TRAIN: time: [0m 12s], loss: 0.1980, accuracy: 93.1178
+Start epoch: 70/200
+Start epoch: 69/200
+TRAIN: time: [0m 12s], loss: 0.1846, accuracy: 93.5470
+TRAIN: time: [0m 12s], loss: 0.1934, accuracy: 93.1482
+Start epoch: 71/200
+Start epoch: 70/200
+TRAIN: time: [0m 12s], loss: 0.1824, accuracy: 93.5902
+Start epoch: 72/200
+TRAIN: time: [0m 13s], loss: 0.1849, accuracy: 93.6029
+Start epoch: 71/200
+TRAIN: time: [0m 12s], loss: 0.1933, accuracy: 93.2313
+Start epoch: 73/200
+TRAIN: time: [0m 13s], loss: 0.1899, accuracy: 93.3252
+Start epoch: 72/200
+TRAIN: time: [0m 12s], loss: 0.1787, accuracy: 93.7001
+Start epoch: 74/200
+TRAIN: time: [0m 13s], loss: 0.1910, accuracy: 93.3092
+Start epoch: 73/200
+TRAIN: time: [0m 12s], loss: 0.1796, accuracy: 93.8139
+Start epoch: 75/200
+TRAIN: time: [0m 13s], loss: 0.1839, accuracy: 93.6797
+Start epoch: 74/200
+TRAIN: time: [0m 12s], loss: 0.1872, accuracy: 93.3760
+Start epoch: 76/200
+TRAIN: time: [0m 12s], loss: 0.1889, accuracy: 93.4059
+Start epoch: 75/200
+TRAIN: time: [0m 12s], loss: 0.0658, accuracy: 97.9340
+Start epoch: 77/200
+TRAIN: time: [0m 12s], loss: 0.1839, accuracy: 93.4767
+Start epoch: 76/200
+TRAIN: time: [0m 12s], loss: 0.0216, accuracy: 99.5233
+Start epoch: 78/200
+TRAIN: time: [0m 12s], loss: 0.0697, accuracy: 97.7789
+Start epoch: 77/200
+TRAIN: time: [0m 12s], loss: 0.0123, accuracy: 99.7902
+Start epoch: 79/200
+TRAIN: time: [0m 12s], loss: 0.0240, accuracy: 99.4385
+Start epoch: 78/200
+TRAIN: time: [0m 12s], loss: 0.0085, accuracy: 99.8861
+Start epoch: 80/200
+TRAIN: time: [0m 12s], loss: 0.0141, accuracy: 99.7171
+Start epoch: 79/200
+TRAIN: time: [0m 13s], loss: 0.0064, accuracy: 99.9181
+Start epoch: 81/200
+TRAIN: time: [0m 12s], loss: 0.0092, accuracy: 99.8821
+Start epoch: 80/200
+TRAIN: time: [0m 13s], loss: 0.0050, accuracy: 99.9361
+Start epoch: 82/200
+TRAIN: time: [0m 12s], loss: 0.0070, accuracy: 99.9041
+Start epoch: 81/200
+TRAIN: time: [0m 13s], loss: 0.0039, accuracy: 99.9700
+Start epoch: 83/200
+TRAIN: time: [0m 13s], loss: 0.0055, accuracy: 99.9389
+Start epoch: 82/200
+TRAIN: time: [0m 13s], loss: 0.0035, accuracy: 99.9680
+Start epoch: 84/200
+TRAIN: time: [0m 13s], loss: 0.0044, accuracy: 99.9501
+Start epoch: 83/200
+TRAIN: time: [0m 13s], loss: 0.0033, accuracy: 99.9628
+Start epoch: 85/200
+TRAIN: time: [0m 12s], loss: 0.0035, accuracy: 99.9800
+Start epoch: 84/200
+TRAIN: time: [0m 13s], loss: 0.0027, accuracy: 99.9780
+Start epoch: 86/200
+TRAIN: time: [0m 12s], loss: 0.0032, accuracy: 99.9600
+Start epoch: 85/200
+TRAIN: time: [0m 13s], loss: 0.0025, accuracy: 99.9760
+TRAIN: time: [0m 12s], loss: 0.0030, accuracy: 99.9740
+Start epoch: 87/200
+Start epoch: 86/200
+TRAIN: time: [0m 13s], loss: 0.0021, accuracy: 99.9860
+TRAIN: time: [0m 13s], loss: 0.0024, accuracy: 99.9860
+Start epoch: 88/200
+Start epoch: 87/200
+TRAIN: time: [0m 12s], loss: 0.0018, accuracy: 99.9980
+Start epoch: 89/200
+TRAIN: time: [0m 13s], loss: 0.0024, accuracy: 99.9760
+Start epoch: 88/200
+TRAIN: time: [0m 12s], loss: 0.0017, accuracy: 99.9940
+Start epoch: 90/200
+TRAIN: time: [0m 12s], loss: 0.0020, accuracy: 99.9860
+Start epoch: 89/200
+TRAIN: time: [0m 12s], loss: 0.0015, accuracy: 99.9940
+Start epoch: 91/200
+TRAIN: time: [0m 12s], loss: 0.0018, accuracy: 99.9920
+Start epoch: 90/200
+TRAIN: time: [0m 12s], loss: 0.0016, accuracy: 99.9880
+Start epoch: 92/200
+TRAIN: time: [0m 13s], loss: 0.0016, accuracy: 99.9900
+Start epoch: 91/200
+TRAIN: time: [0m 12s], loss: 0.0014, accuracy: 99.9920
+Start epoch: 93/200
+TRAIN: time: [0m 12s], loss: 0.0016, accuracy: 99.9900
+Start epoch: 92/200
+TRAIN: time: [0m 12s], loss: 0.0013, accuracy: 100.0000
+Start epoch: 94/200
+TRAIN: time: [0m 12s], loss: 0.0017, accuracy: 99.9860
+Start epoch: 93/200
+TRAIN: time: [0m 12s], loss: 0.0013, accuracy: 99.9940
+Start epoch: 95/200
+TRAIN: time: [0m 12s], loss: 0.0015, accuracy: 99.9920
+Start epoch: 94/200
+TRAIN: time: [0m 12s], loss: 0.0013, accuracy: 99.9980
+Start epoch: 96/200
+TRAIN: time: [0m 13s], loss: 0.0014, accuracy: 99.9940
+Start epoch: 95/200
+TRAIN: time: [0m 13s], loss: 0.0012, accuracy: 99.9980
+Start epoch: 97/200
+TRAIN: time: [0m 13s], loss: 0.0013, accuracy: 99.9940
+Start epoch: 96/200
+TRAIN: time: [0m 12s], loss: 0.0012, accuracy: 99.9960
+Start epoch: 98/200
+TRAIN: time: [0m 13s], loss: 0.0011, accuracy: 99.9960
+Start epoch: 97/200
+TRAIN: time: [0m 12s], loss: 0.0011, accuracy: 99.9980
+Start epoch: 99/200
+TRAIN: time: [0m 12s], loss: 0.0011, accuracy: 99.9948
+Start epoch: 98/200
+TRAIN: time: [0m 12s], loss: 0.0010, accuracy: 100.0000
+Start epoch: 100/200
+TRAIN: time: [0m 13s], loss: 0.0011, accuracy: 99.9960
+Start epoch: 99/200
+TRAIN: time: [0m 13s], loss: 0.0010, accuracy: 99.9980
+Start epoch: 101/200
+TRAIN: time: [0m 12s], loss: 0.0011, accuracy: 99.9980
+Start epoch: 100/200
+TRAIN: time: [0m 12s], loss: 0.0010, accuracy: 99.9980
+Start epoch: 102/200
+TRAIN: time: [0m 13s], loss: 0.0010, accuracy: 99.9980
+Start epoch: 101/200
+TRAIN: time: [0m 13s], loss: 0.0010, accuracy: 99.9960
+Start epoch: 103/200
+TRAIN: time: [0m 12s], loss: 0.0010, accuracy: 99.9980
+Start epoch: 102/200
+TRAIN: time: [0m 12s], loss: 0.0010, accuracy: 99.9940
+Start epoch: 104/200
+TRAIN: time: [0m 13s], loss: 0.0010, accuracy: 99.9960
+Start epoch: 103/200
+TRAIN: time: [0m 12s], loss: 0.0009, accuracy: 99.9960
+Start epoch: 105/200
+TRAIN: time: [0m 14s], loss: 0.0009, accuracy: 99.9980
+Start epoch: 104/200
+TRAIN: time: [0m 12s], loss: 0.0009, accuracy: 99.9960
+Start epoch: 106/200
+TRAIN: time: [0m 13s], loss: 0.0009, accuracy: 99.9980
+Start epoch: 105/200
+TRAIN: time: [0m 13s], loss: 0.0008, accuracy: 99.9980
+Start epoch: 107/200
+TRAIN: time: [0m 12s], loss: 0.0009, accuracy: 99.9960
+Start epoch: 106/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9980
+Start epoch: 108/200
+TRAIN: time: [0m 13s], loss: 0.0008, accuracy: 99.9980
+Start epoch: 107/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 100.0000
+Start epoch: 109/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 100.0000
+Start epoch: 108/200
+TRAIN: time: [0m 12s], loss: 0.0010, accuracy: 99.9960
+Start epoch: 110/200
+TRAIN: time: [0m 12s], loss: 0.0009, accuracy: 99.9980
+Start epoch: 109/200
+TRAIN: time: [0m 13s], loss: 0.0009, accuracy: 99.9980
+Start epoch: 111/200
+TRAIN: time: [0m 13s], loss: 0.0009, accuracy: 99.9980
+Start epoch: 110/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9980
+Start epoch: 112/200
+TRAIN: time: [0m 13s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 111/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 113/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 112/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 114/200
+TRAIN: time: [0m 13s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 113/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 115/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 114/200
+TRAIN: time: [0m 11s], loss: 0.0008, accuracy: 99.9920
+Start epoch: 116/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 115/200
+TRAIN: time: [0m 13s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 117/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9960
+Start epoch: 116/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9960
+Start epoch: 118/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 117/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 119/200
+TRAIN: time: [0m 13s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 118/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 120/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9920
+Start epoch: 119/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 121/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9980
+Start epoch: 120/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9960
+Start epoch: 122/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 121/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9960
+Start epoch: 123/200
+TRAIN: time: [0m 13s], loss: 0.0007, accuracy: 99.9960
+Start epoch: 122/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 124/200
+TRAIN: time: [0m 13s], loss: 0.0008, accuracy: 99.9960
+Start epoch: 123/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9960
+Start epoch: 125/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 124/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 126/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 125/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9940
+Start epoch: 127/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 126/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 128/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 127/200
+TRAIN: time: [0m 14s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 129/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 128/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 130/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 129/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 131/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 100.0000
+Start epoch: 130/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9920
+Start epoch: 132/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 131/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 133/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 132/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 134/200
+TRAIN: time: [0m 12s], loss: 0.0007, accuracy: 99.9960
+Start epoch: 133/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9960
+Start epoch: 135/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 134/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 136/200
+TRAIN: time: [0m 12s], loss: 0.0008, accuracy: 99.9948
+Start epoch: 135/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 137/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 136/200
+TRAIN: time: [0m 11s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 138/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 137/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 139/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 138/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 140/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 139/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 141/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 99.9960
+Start epoch: 140/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 142/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 141/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 143/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9960
+Start epoch: 142/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 144/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 143/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 145/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 144/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 146/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 100.0000
+Start epoch: 145/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 147/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 146/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 148/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 147/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 149/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 99.9980
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 148/200
+Start epoch: 150/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 149/200
+Start epoch: 151/200
+TRAIN: time: [0m 11s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 152/200
+Start epoch: 150/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 151/200
+Start epoch: 153/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 154/200
+Start epoch: 152/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 153/200
+Start epoch: 155/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 156/200
+Start epoch: 154/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 157/200
+Start epoch: 155/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 156/200
+Start epoch: 158/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 14s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 157/200
+Start epoch: 159/200
+TRAIN: time: [0m 13s], loss: 0.0006, accuracy: 99.9960
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 158/200
+Start epoch: 160/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 161/200
+Start epoch: 159/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9960
+Start epoch: 162/200
+Start epoch: 160/200
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 163/200
+Start epoch: 161/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 164/200
+Start epoch: 162/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9980
+Start epoch: 165/200
+Start epoch: 163/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 166/200
+Start epoch: 164/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 167/200
+Start epoch: 165/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0006, accuracy: 99.9940
+Start epoch: 168/200
+Start epoch: 166/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9960
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 169/200
+Start epoch: 167/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 170/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 168/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 171/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 169/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 172/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 170/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 173/200
+TRAIN: time: [0m 14s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 171/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 174/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 172/200
+TRAIN: time: [0m 12s], loss: 0.0004, accuracy: 100.0000
+Start epoch: 175/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 173/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 176/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 174/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 177/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 175/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 178/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 176/200
+Start epoch: 179/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 177/200
+Start epoch: 180/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 178/200
+Start epoch: 181/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 179/200
+Start epoch: 182/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 180/200
+Start epoch: 183/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 181/200
+Start epoch: 184/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 182/200
+Start epoch: 185/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 183/200
+Start epoch: 186/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 184/200
+Start epoch: 187/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 185/200
+Start epoch: 188/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 186/200
+Start epoch: 189/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 187/200
+Start epoch: 190/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0004, accuracy: 100.0000
+Start epoch: 188/200
+Start epoch: 191/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 189/200
+Start epoch: 192/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 190/200
+Start epoch: 193/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 191/200
+Start epoch: 194/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 195/200
+Start epoch: 192/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 196/200
+Start epoch: 193/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 197/200
+Start epoch: 194/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 195/200
+Start epoch: 198/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 196/200
+Start epoch: 199/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 200/200
+Start epoch: 197/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 198/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000
+Start epoch: 199/200
+TRAIN: time: [0m 13s], loss: 0.0005, accuracy: 99.9980
+Start epoch: 200/200
+TRAIN: time: [0m 12s], loss: 0.0005, accuracy: 100.0000

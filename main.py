@@ -157,7 +157,7 @@ def main(args):
                 lr=0.1,
                 optim='adam',
                 restarts=1,
-                max_iterations=1,
+                max_iterations=4000,
                 total_variation=1e-6,
                 init='randn',
                 filter='none',

@@ -1,11 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=xnoi_original
-#SBATCH -p titanxp
+#SBATCH --job-name=xnoise_original
+#SBATCH -p cpu-max10
 #SBATCH -N 1
 #SBATCH -n 1
-#SBATCH --gres=gpu:2
+#SBATCH -q nogpu
+#SBATCH --cpus-per-task=10
 
 # epoch is enough around 200~300
 
-srun python main.py --function=attack --aug_type=original --name=xnoise
+srun python main.py  --function=attack --aug_type=original --name=xnoise

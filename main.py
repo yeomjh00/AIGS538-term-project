@@ -63,7 +63,7 @@ def main(args):
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=75, gamma=0.1)
 
     if args.function == "test" or args.function == "attack":
-        victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl"))
+        victim.load_state_dict(torch.load(f"{args.save_path}/{str(args.aug_type)}{str(args.name)}.pkl", map_location=args.device))
 
     if args.function == "train" or args.function is None:
         val_loss = float("inf")

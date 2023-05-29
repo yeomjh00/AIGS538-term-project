@@ -1,10 +1,11 @@
 #!/bin/bash
 
 #SBATCH --job-name=vanilla
-#SBATCH -p titanxp
-#SBATCH -N 2
-#SBATCH  --nodelist=n2
-#SBATCH --gres=gpu:2
+#SBATCH -p cpu-max24
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -q nogpu
+#SBATCH --cpus-per-task=10
 
 # epoch is enough around 200~300
 

@@ -9,7 +9,7 @@ def return_args():
     arg_parse.add_argument('--output_path', type=str, default='./outputs', help='output path')
     arg_parse.add_argument('--attack_path', type=str, default='./attack', help='path for storing attack/victim images')
     arg_parse.add_argument('--name', type=str, default="", help='name of the experiment')
-    arg_parse.add_argument('--device', type=str, default='cuda', help='cuda/cpu')
+    arg_parse.add_argument('--device', type=str, default='cpu', help='cuda/cpu')
     
     # Dataset
     arg_parse.add_argument('--dataset', type=str, default='cifar10', help='cifar10, cifar100, svhn')

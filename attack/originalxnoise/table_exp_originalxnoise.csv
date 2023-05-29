@@ -1,0 +1,4 @@
+rec_loss	psnr	test_mse	feat_mse	index	attck_img	victim_img
+0.15708327293395996	13.399773597717285	tensor(0.7280)	3.5284e-01	0	attck_xnoise_idx0.png	victim_xnoise_idx0.png
+0.15708327293395996	13.399773597717285	tensor(0.7280)	3.5284e-01	0	attck_xnoise_idx0.png	victim_xnoise_idx0.png
+0.05730372667312622	22.966848373413086	tensor(0.0804)	4.5332e-01	1	attck_xnoise_idx1.png	victim_xnoise_idx1.png

@@ -115,7 +115,6 @@ def main(args):
         for i, (ground_truth, labels) in enumerate(test_set):
             if i > 1: break
             sample_list.append((ground_truth, labels))
-        model = str(args.aug_type) + args.name
 
         if not os.path.exists(args.attack_path):
             os.mkdir(args.attack_path)
@@ -158,7 +157,7 @@ def main(args):
                     lr=0.1,
                     optim='adam',
                     restarts=1,
-                    max_iterations=1,
+                    max_iterations=4000,
                     total_variation=1e-6,
                     init='randn',
                     filter='none',

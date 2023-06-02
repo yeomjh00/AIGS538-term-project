@@ -6,7 +6,7 @@ from torch.utils.data.dataset import Dataset
     
 def load_augmentation(dataset, args, edge=False) -> Dataset:
     aug_type = args.aug_type
-    if aug_type is None:
+    if aug_type is None or edge:
         return dataset
     elif aug_type == "saliencymix":
         return SaliencyMix(dataset, args)

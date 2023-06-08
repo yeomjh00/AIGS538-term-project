@@ -10,6 +10,9 @@ def return_args():
     arg_parse.add_argument('--attack_path', type=str, default='./attack', help='path for storing attack/victim images')
     arg_parse.add_argument('--name', type=str, default="", help='name of the experiment')
     arg_parse.add_argument('--device', type=str, default='cuda', help='cuda/cpu')
+    
+    # Attack
+    arg_parse.add_argument('--max_iter', type=int, default=4000, help='max iteration for attack')
     arg_parse.add_argument('--attack_num', type=int, default=2, help='number of attack images to generate')
     
     # Dataset

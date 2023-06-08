@@ -110,10 +110,10 @@ def main(args):
         ds = torch.as_tensor(cifar10_std, dtype=torch.float).to(device)[:, None, None]
 
         sample_list = []
-        model_list= ["None", "mixup", "cutmix", "saliencymix", "original", "originalxnoise"]
+        model = str(args.aug_type) + str(args.name)
 
         for i, (ground_truth, labels) in enumerate(test_set):
-            if i > 1: break
+            if i > args.attack_num: break
             sample_list.append((ground_truth, labels))
 
         if not os.path.exists(args.attack_path):
@@ -122,107 +122,99 @@ def main(args):
             os.mkdir(f"{args.attack_path}/{str(model)}")
         _sample_list = sample_list.copy()
 
-        for model in model_list:
-            victim = classifier.ResNet().to(device)
-            victim.load_state_dict(torch.load(f"{args.save_path}/{str(model)}.pkl", map_location=device))
-            victim.eval()
-            for i, (ground_truth, labels) in enumerate(_sample_list):
+        victim = classifier.ResNet().to(device)
+        victim.load_state_dict(torch.load(f"{args.save_path}/{str(model)}.pkl", map_location=device))
+        victim.eval()
+        for i, (ground_truth, labels) in enumerate(_sample_list):
 
-                # if args.aug_type is None:
-                ground_truth, labels = (
-                    ground_truth.unsqueeze(0).to(device),
-                    torch.as_tensor((labels,), device=device),
-                    )
-                # else:
-                #     ground_truth, labels = (
-                #         ground_truth.unsqueeze(0).to(device),
-                #         labels.unsqueeze(0).to(device),
-                #     )
-                img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
-
-                # 2. train images
-                victim.zero_grad()
-                target_loss = F.cross_entropy(victim(ground_truth), labels)
-                input_gradient = torch.autograd.grad(target_loss, victim.parameters())
-                input_gradient = [grad.detach() for grad in input_gradient]
-                
-                # 3. attack
-                # have to modify values according to several options(?)
-                config = dict(
-                    signed=True,
-                    boxed=True,
-                    cost_fn='sim',
-                    indices='def',
-                    weights='equal',
-                    lr=0.1,
-                    optim='adam',
-                    restarts=1,
-                    max_iterations=4000,
-                    total_variation=1e-6,
-                    init='randn',
-                    filter='none',
-                    lr_decay=True,
-                    scoring_choice='loss',
+            ground_truth, labels = (
+                ground_truth.unsqueeze(0).to(device),
+                torch.as_tensor((labels,), device=device),
                 )
+            img_shape = (3, ground_truth.shape[2], ground_truth.shape[3])
 
-                rec_machine = attack.GradientReconstructor(victim, (dm, ds), config)
-                output, stats, mid_output = rec_machine.reconstruct(input_gradient, labels, img_shape=img_shape)
+            # 2. train images
+            victim.zero_grad()
+            target_loss = F.cross_entropy(victim(ground_truth), labels)
+            input_gradient = torch.autograd.grad(target_loss, victim.parameters())
+            input_gradient = [grad.detach() for grad in input_gradient]
+            
+            # 3. attack
+            config = dict(
+                signed=True,
+                boxed=True,
+                cost_fn='sim',
+                indices='def',
+                weights='equal',
+                lr=0.1,
+                optim='adam',
+                restarts=1,
+                max_iterations=args.max_iter,
+                total_variation=1e-6,
+                init='randn',
+                filter='none',
+                lr_decay=True,
+                scoring_choice='loss',
+            )
 
-                test_mse = (output.detach() - ground_truth).pow(2).mean()
-                feat_mse = (victim(output.detach())- victim(ground_truth)).pow(2).mean()  
-                test_psnr = metrics.psnr(output, ground_truth, factor=1/ds)
+            rec_machine = attack.GradientReconstructor(victim, (dm, ds), config)
+            output, stats, mid_output = rec_machine.reconstruct(input_gradient, labels, img_shape=img_shape)
 
-                # 4. store attack result & metric
-                output_denormalized = torch.clamp(output * ds + dm, 0, 1)
-                attck_filename = f"attck_{args.name}_idx{i}.png"
-                torchvision.utils.save_image(output_denormalized, f"{args.attack_path}/{str(model)}/"+attck_filename)
-                gt_denormalized = torch.clamp(ground_truth * ds + dm, 0, 1)
-                victim_filename = f"victim_{args.name}_idx{i}.png"
-                torchvision.utils.save_image(gt_denormalized, f"{args.attack_path}/{str(model)}/"+victim_filename)
+            test_mse = (output.detach() - ground_truth).pow(2).mean()
+            feat_mse = (victim(output.detach())- victim(ground_truth)).pow(2).mean()  
+            test_psnr = metrics.psnr(output, ground_truth, factor=1/ds)
 
-                print(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} | PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
-                save_to_table(
-                    f"{args.attack_path}/{str(model)}/",
-                    name=f"exp_{model}",
-                    dryrun=False,
-                    rec_loss=stats["opt"],
-                    psnr=test_psnr,
-                    test_mse=test_mse,
-                    feat_mse=f"{feat_mse:2.4e}",
-                    index=i,
-                    attck_img=attck_filename,
-                    victim_img=victim_filename,
-                )
+            # 4. store attack result & metric
+            output_denormalized = torch.clamp(output * ds + dm, 0, 1)
+            attck_filename = f"attck_{args.name}_idx{i}.png"
+            torchvision.utils.save_image(output_denormalized, f"{args.attack_path}/{str(model)}/"+attck_filename)
+            gt_denormalized = torch.clamp(ground_truth * ds + dm, 0, 1)
+            victim_filename = f"victim_{args.name}_idx{i}.png"
+            torchvision.utils.save_image(gt_denormalized, f"{args.attack_path}/{str(model)}/"+victim_filename)
 
-                data = metrics.activation_errors(victim, output, ground_truth)
+            print(f"Rec. loss: {stats['opt']:2.4f} | MSE: {test_mse:2.4f} | PSNR: {test_psnr:4.2f} | FMSE: {feat_mse:2.4e} |")
+            save_to_table(
+                f"{args.attack_path}/{str(model)}/",
+                name=f"exp_{model}",
+                dryrun=False,
+                rec_loss=stats["opt"],
+                psnr=test_psnr,
+                test_mse=test_mse,
+                feat_mse=f"{feat_mse:2.4e}",
+                index=i,
+                attck_img=attck_filename,
+                victim_img=victim_filename,
+            )
 
-                fig, axes = plt.subplots(2, 3, sharey=False, figsize=(14,8))
-                axes[0, 0].semilogy(list(data['se'].values())[:-3])
-                axes[0, 0].set_title('SE')
-                axes[0, 1].semilogy(list(data['mse'].values())[:-3])
-                axes[0, 1].set_title('MSE')
-                axes[0, 2].plot(list(data['sim'].values())[:-3])
-                axes[0, 2].set_title('Similarity')
+            data = metrics.activation_errors(victim, output, ground_truth)
 
-                convs = [val for key, val in data['mse'].items() if 'conv' in key]
-                axes[1, 0].semilogy(convs)
-                axes[1, 0].set_title('MSE - conv layers')
-                convs = [val for key, val in data['mse'].items() if 'conv1' in key]
-                axes[1, 1].semilogy(convs)
-                convs = [val for key, val in data['mse'].items() if 'conv2' in key]
-                axes[1, 1].semilogy(convs)
-                axes[1, 1].set_title('MSE - conv1 vs conv2 layers')
-                bns = [val for key, val in data['mse'].items() if 'bn' in key]
-                axes[1, 2].plot(bns)
-                axes[1, 2].set_title('MSE - bn layers')
-                fig.suptitle('Error between layers')
-                plt.savefig(f"{args.attack_path}/{str(model)}/metrics_idx{i}.png")
+            fig, axes = plt.subplots(2, 3, sharey=False, figsize=(14,8))
+            axes[0, 0].semilogy(list(data['se'].values())[:-3])
+            axes[0, 0].set_title('SE')
+            axes[0, 1].semilogy(list(data['mse'].values())[:-3])
+            axes[0, 1].set_title('MSE')
+            axes[0, 2].plot(list(data['sim'].values())[:-3])
+            axes[0, 2].set_title('Similarity')
 
-                # 5. visualize by TensorBoard
-                if config["restarts"] == 1:
-                    for i in range(len(mid_output)):
-                        for j in range(len(mid_output[i])):
-                            writer.add_image("image/iteration", pixel_0_to_255(mid_output[i][j].squeeze(0).cpu()), j)
+            convs = [val for key, val in data['mse'].items() if 'conv' in key]
+            axes[1, 0].semilogy(convs)
+            axes[1, 0].set_title('MSE - conv layers')
+            convs = [val for key, val in data['mse'].items() if 'conv1' in key]
+            axes[1, 1].semilogy(convs)
+            convs = [val for key, val in data['mse'].items() if 'conv2' in key]
+            axes[1, 1].semilogy(convs)
+            axes[1, 1].set_title('MSE - conv1 vs conv2 layers')
+            bns = [val for key, val in data['mse'].items() if 'bn' in key]
+            axes[1, 2].plot(bns)
+            axes[1, 2].set_title('MSE - bn layers')
+            fig.suptitle('Error between layers')
+            plt.savefig(f"{args.attack_path}/{str(model)}/metrics_idx{i}.png")
+
+            # 5. visualize by TensorBoard
+            if config["restarts"] == 1:
+                for i in range(len(mid_output)):
+                    for j in range(len(mid_output[i])):
+                        writer.add_image("image/iteration", pixel_0_to_255(mid_output[i][j].squeeze(0).cpu()), j)
 
         writer.close()
 
